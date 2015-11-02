@@ -12,7 +12,7 @@ import CoreData
 
 public class CoreDataStackManager {
     lazy var managedObjectContext: NSManagedObjectContext! = {
-        let modelURL = NSBundle.mainBundle().URLForResource("SwiftTestOne", withExtension: "momd")!
+        let modelURL = NSBundle.mainBundle().URLForResource("VirtualTourist", withExtension: "momd")!
         let mom = NSManagedObjectModel(contentsOfURL: modelURL)!
         //ZAssert(mom != nil, "Error initializing mom from: \(modelURL)")
         
@@ -41,4 +41,10 @@ public class CoreDataStackManager {
         try moc.save()
     }
     
+    private static var _sharedInstance: CoreDataStackManager = {
+        return CoreDataStackManager()
+    }()
+    public static func sharedInstance() -> CoreDataStackManager {
+        return _sharedInstance
+    }
 }
