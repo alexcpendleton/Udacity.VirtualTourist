@@ -13,7 +13,9 @@
 		498F808F1BE31075004ABBD5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 498F808E1BE31075004ABBD5 /* Assets.xcassets */; };
 		498F80921BE31075004ABBD5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 498F80901BE31075004ABBD5 /* LaunchScreen.storyboard */; };
 		498F809D1BE31075004ABBD5 /* VirtualTouristTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498F809C1BE31075004ABBD5 /* VirtualTouristTests.swift */; };
+		49D6AF5C1BE70E8800DE69CB /* PinPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6AF5B1BE70E8800DE69CB /* PinPhoto.swift */; };
 		49E0B73C1BE701CA009239DF /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E0B73B1BE701CA009239DF /* CoreDataStackManager.swift */; };
+		49E0B73F1BE70B54009239DF /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E0B73E1BE70B54009239DF /* Pin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +39,9 @@
 		498F80981BE31075004ABBD5 /* VirtualTouristTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VirtualTouristTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		498F809C1BE31075004ABBD5 /* VirtualTouristTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualTouristTests.swift; sourceTree = "<group>"; };
 		498F809E1BE31075004ABBD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49D6AF5B1BE70E8800DE69CB /* PinPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinPhoto.swift; sourceTree = "<group>"; };
 		49E0B73B1BE701CA009239DF /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		49E0B73E1BE70B54009239DF /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,7 @@
 		498F80831BE31075004ABBD5 /* VirtualTourist */ = {
 			isa = PBXGroup;
 			children = (
+				49E0B73D1BE70B3A009239DF /* Entities */,
 				498F80A81BE31119004ABBD5 /* Common */,
 				498F80A71BE31087004ABBD5 /* ViewControllers */,
 				498F80841BE31075004ABBD5 /* AppDelegate.swift */,
@@ -113,6 +118,15 @@
 				49E0B73B1BE701CA009239DF /* CoreDataStackManager.swift */,
 			);
 			name = Common;
+			sourceTree = "<group>";
+		};
+		49E0B73D1BE70B3A009239DF /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				49E0B73E1BE70B54009239DF /* Pin.swift */,
+				49D6AF5B1BE70E8800DE69CB /* PinPhoto.swift */,
+			);
+			name = Entities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,6 +233,8 @@
 				49E0B73C1BE701CA009239DF /* CoreDataStackManager.swift in Sources */,
 				498F80851BE31075004ABBD5 /* AppDelegate.swift in Sources */,
 				498F808D1BE31075004ABBD5 /* VirtualTourist.xcdatamodeld in Sources */,
+				49E0B73F1BE70B54009239DF /* Pin.swift in Sources */,
+				49D6AF5C1BE70E8800DE69CB /* PinPhoto.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
