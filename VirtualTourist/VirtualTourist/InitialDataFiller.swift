@@ -13,10 +13,10 @@ public class InitialDataFiller {
     let appConfigFactory: NsmAppConfigurationFactory
     let repo: NsmAppConfigurationRepository
     let context: NSManagedObjectContext
-    init(context c: NSManagedObjectContext) {
+    init(context c: NSManagedObjectContext, factory: NsmAppConfigurationFactory, repository: NsmAppConfigurationRepository) {
         context = c
-        appConfigFactory = NsmAppConfigurationFactory(context: c)
-        repo = NsmAppConfigurationRepository(context: c)
+        appConfigFactory = factory
+        repo = repository
     }
     public func fillIfNecessary() throws {
         if !determinedIfFilled() {
@@ -25,11 +25,17 @@ public class InitialDataFiller {
     }
     
     func determinedIfFilled() -> Bool {
-        return repo.all().count > 0
+        do {
+            let single = try repo.only()
+            return single != nil
+        } catch _ {
+            return false
+        }
+            
     }
     
     func fill() throws {
-        appConfigFactory.create(NSDate(), zoomLevel: 1.0, longitude: 37.3318242, latitude: -122.0333687)
+        appConfigFactory.create(-122.0333687, latitude: 37.3318242, longitudeDelta: 6000, latitudeDelta: 6000)
         try context.save()
     }
 }
@@ -42,16 +48,23 @@ public class NsmAppConfigurationRepository {
         context = c
     }
     
-    public func all() -> [AppConfiguration] {
+    public func only() throws -> AppConfiguration? {
         let request = NSFetchRequest(entityName: entityName)
         
         do {
             let results = try context.executeFetchRequest(request) as! [AppConfiguration]
-            return results
+            if results.count == 0 {
+                return nil
+            }
+            return results.first!
         } catch {
-            print("Error fetching all AppConfiguration")
-            return [AppConfiguration]()
+            return nil
         }
+        
+    }
+    
+    public func save() throws {
+        try context.save()
     }
 }
 
@@ -60,12 +73,12 @@ public class NsmAppConfigurationFactory {
     init(context c: NSManagedObjectContext) {
         context = c
     }
-    func create(lastLogin: NSDate, zoomLevel: Double, longitude: Float, latitude: Float)->AppConfiguration {
+    func create(longitude: NSNumber, latitude: NSNumber, longitudeDelta: NSNumber, latitudeDelta: NSNumber)->AppConfiguration {
         return create([
-            AppConfiguration.Keys.lastLatitude: NSNumber(float: latitude),
-            AppConfiguration.Keys.lastLogin: lastLogin,
-            AppConfiguration.Keys.lastLongitude: NSNumber(float: longitude),
-            AppConfiguration.Keys.zoomLevel: NSNumber(double: zoomLevel)
+            AppConfiguration.Keys.latitude: latitude,
+            AppConfiguration.Keys.longitude: longitude,
+            AppConfiguration.Keys.latitudeDelta: latitudeDelta,
+            AppConfiguration.Keys.longitudeDelta: longitudeDelta
         ])
     }
     func create(dictionary:[String:AnyObject]) -> AppConfiguration {

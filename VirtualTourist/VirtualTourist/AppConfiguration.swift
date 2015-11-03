@@ -8,28 +8,35 @@
 
 import Foundation
 import CoreData
+import MapKit
 
 @objc(AppConfiguration)
 public class AppConfiguration : NSManagedObject {
     struct Keys {
-        static let lastLogin = "lastLogin"
-        static let zoomLevel = "zoomLevel"
-        static let lastLongitude = "lastLongitude"
-        static let lastLatitude = "lastLatitude"
+        static let longitude = "longitude"
+        static let latitude = "latitude"
+        static let longitudeDelta = "longitudeDelta"
+        static let latitudeDelta = "latitudeDelta"
     }
     
-    @NSManaged var lastLogin: NSDate
-    @NSManaged var zoomLevel: NSNumber
-    @NSManaged var lastLongitude: NSNumber
-    @NSManaged var lastLatitude: NSNumber
     
-    init(dictionary: [String:AnyObject], context: NSManagedObjectContext) {
+    @NSManaged var latitudeDelta: NSNumber
+    @NSManaged var longitudeDelta: NSNumber
+    @NSManaged var latitude: NSNumber
+    @NSManaged var longitude: NSNumber
+    
+    public var coordinate : CLLocationCoordinate2D {
+        get {
+            return CLLocationCoordinate2D(latitude: latitude.doubleValue, longitude: longitude.doubleValue)
+        }
+    }
+    
+    convenience init(dictionary: [String:AnyObject], context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("AppConfiguration", inManagedObjectContext: context)
-        super.init(entity: entity!, insertIntoManagedObjectContext: context)
-        lastLogin = dictionary[Keys.lastLogin] as! NSDate
-        zoomLevel = dictionary[Keys.zoomLevel] as! NSNumber
-        lastLongitude = dictionary[Keys.lastLongitude] as! NSNumber
-        lastLatitude = dictionary[Keys.lastLatitude] as! NSNumber
-        
+        self.init(entity: entity!, insertIntoManagedObjectContext: context)
+        longitude = dictionary[Keys.longitude] as! NSNumber
+        latitude = dictionary[Keys.latitude] as! NSNumber
+        longitudeDelta = dictionary[Keys.longitudeDelta] as! NSNumber
+        latitudeDelta = dictionary[Keys.latitudeDelta] as! NSNumber
     }
 }
