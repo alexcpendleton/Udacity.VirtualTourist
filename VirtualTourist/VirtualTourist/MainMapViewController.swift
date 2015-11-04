@@ -10,10 +10,11 @@ import Foundation
 import UIKit
 import MapKit
 
-public class MainMapViewController : UIViewController, MKMapViewDelegate {
+public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDropManagerDelegate {
     @IBOutlet weak var map: MKMapView!
     public var startingPoint: CLLocationCoordinate2D?
     public var appConfigManager: AppConfigManager!
+    public var pinDropManager: PinDropManager!
     
     public func zoomTo(coordinate:CLLocationCoordinate2D) {
         map.setCenterCoordinate(coordinate, animated: true)
@@ -29,6 +30,10 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate {
         return span
     }
     
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         appConfigManager = AppDelegate.sharedInstance().appConfigManager
@@ -39,6 +44,9 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate {
         }
         let region = MKCoordinateRegionMake(startingPoint!, makeSpan(record))
         map.setRegion(region, animated: true)
+        
+        pinDropManager = PinDropManager(mapView: map, delegate: self)
+        pinDropManager.register()
     }
     
     public func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
@@ -47,5 +55,10 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate {
         appConfigManager.record.longitudeDelta = region.span.longitudeDelta
         appConfigManager.record.latitudeDelta = region.span.latitudeDelta
         appConfigManager.save()
+    }
+    
+    public func pinDropped(annotation: MKPointAnnotation) {
+        
+        // TODO: Do something here....
     }
 }
