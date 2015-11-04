@@ -13,15 +13,19 @@ import CoreData
 public class AppDelegate: UIResponder, UIApplicationDelegate {
 
     public var window: UIWindow?
+    /// Handles the initial filling of data for the first load of the app.
     public var dataFiller: InitialDataFiller!
     public var stackManager: CoreDataStackManager!
     
     public var appConfigRepo: NsmAppConfigurationRepository!
     public var appConfigFactory: NsmAppConfigurationFactory!
-    
+    /** Handles the single AppConfiguration record that is used for
+     maintaining application state between loads. */
     public var appConfigManager: AppConfigManager!
     
     private static var _sharedInstance: AppDelegate!
+    /** Gets the shared instance Singleton for the app's various configuration
+     members and methods */
     public static func sharedInstance() -> AppDelegate {
         return _sharedInstance
     }
@@ -35,7 +39,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         dataFiller = InitialDataFiller(context: context, factory: appConfigFactory, repository: appConfigRepo)
         try! dataFiller.fillIfNecessary()
         
-    
         appConfigManager = AppConfigManager(repo: appConfigRepo)
         
         AppDelegate._sharedInstance = self

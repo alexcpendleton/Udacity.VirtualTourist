@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 
+/** Handles the initial filling of data for the first load of the app. */
 public class InitialDataFiller {
     let appConfigFactory: NsmAppConfigurationFactory
     let repo: NsmAppConfigurationRepository
@@ -18,12 +19,14 @@ public class InitialDataFiller {
         appConfigFactory = factory
         repo = repository
     }
+    
+    /** Adds the appropriate initial data if there's nothing there already. */
     public func fillIfNecessary() throws {
         if !determinedIfFilled() {
             try fill()
         }
     }
-    
+    /** Determines if there's already a record in the database. */
     func determinedIfFilled() -> Bool {
         do {
             let single = try repo.only()
@@ -33,55 +36,12 @@ public class InitialDataFiller {
         }
             
     }
-    
+    /** 
+     Creates and stores a single AppConfiguration record using the default values. 
+     Throws: Bubbles up exceptions from Core Data calls.
+     */
     func fill() throws {
         appConfigFactory.create(-122.0333687, latitude: 37.3318242, longitudeDelta: 6000, latitudeDelta: 6000)
         try context.save()
-    }
-}
-
-public class NsmAppConfigurationRepository {
-    var entityName = "AppConfiguration"
-    
-    let context: NSManagedObjectContext
-    init(context c: NSManagedObjectContext) {
-        context = c
-    }
-    
-    public func only() throws -> AppConfiguration? {
-        let request = NSFetchRequest(entityName: entityName)
-        
-        do {
-            let results = try context.executeFetchRequest(request) as! [AppConfiguration]
-            if results.count == 0 {
-                return nil
-            }
-            return results.first!
-        } catch {
-            return nil
-        }
-        
-    }
-    
-    public func save() throws {
-        try context.save()
-    }
-}
-
-public class NsmAppConfigurationFactory {
-    let context: NSManagedObjectContext
-    init(context c: NSManagedObjectContext) {
-        context = c
-    }
-    func create(longitude: NSNumber, latitude: NSNumber, longitudeDelta: NSNumber, latitudeDelta: NSNumber)->AppConfiguration {
-        return create([
-            AppConfiguration.Keys.latitude: latitude,
-            AppConfiguration.Keys.longitude: longitude,
-            AppConfiguration.Keys.latitudeDelta: latitudeDelta,
-            AppConfiguration.Keys.longitudeDelta: longitudeDelta
-        ])
-    }
-    func create(dictionary:[String:AnyObject]) -> AppConfiguration {
-        return AppConfiguration(dictionary: dictionary, context: context)
     }
 }
