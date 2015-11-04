@@ -19,10 +19,11 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     public var appConfigRepo: NsmAppConfigurationRepository!
     public var appConfigFactory: NsmAppConfigurationFactory!
     
-    //public var appConfigManager: AppConfigManager!
+    public var appConfigManager: AppConfigManager!
     
+    private static var _sharedInstance: AppDelegate!
     public static func sharedInstance() -> AppDelegate {
-        return UIApplication.sharedApplication().delegate as! AppDelegate
+        return _sharedInstance
     }
 
     public func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -34,11 +35,10 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         dataFiller = InitialDataFiller(context: context, factory: appConfigFactory, repository: appConfigRepo)
         try! dataFiller.fillIfNecessary()
         
+    
+        appConfigManager = AppConfigManager(repo: appConfigRepo)
         
-        var appConfigManager = AppConfigManager(repo: appConfigRepo, factory: appConfigFactory)
-        let fu = try! appConfigRepo.only()
-        appConfigManager.record = fu
-        AppConfigManager.sharedInstance = appConfigManager
+        AppDelegate._sharedInstance = self
         // Override point for customization after application launch.
         return true
     }

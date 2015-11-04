@@ -31,7 +31,7 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate {
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        appConfigManager = AppConfigManager.sharedInstance
+        appConfigManager = AppDelegate.sharedInstance().appConfigManager
         let record = appConfigManager.record
         if startingPoint == nil {
             startingPoint = record.coordinate
@@ -39,7 +39,6 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate {
         }
         let region = MKCoordinateRegionMake(startingPoint!, makeSpan(record))
         map.setRegion(region, animated: true)
-        //map.setRegion(MKCoordinateRegion(center: startingPoint!, span: MKCoordinateSpanMake(record.latitudeDelta.doubleValue, record.longitudeDelta.doubleValue)) animated: true)
     }
     
     public func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
@@ -49,20 +48,4 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate {
         appConfigManager.record.latitudeDelta = region.span.latitudeDelta
         appConfigManager.save()
     }
-}
-
-public class AppConfigManager {
-    public var record: AppConfiguration!
-    let repo: NsmAppConfigurationRepository!
-    let factory: NsmAppConfigurationFactory!
-    init(repo r: NsmAppConfigurationRepository, factory f: NsmAppConfigurationFactory) {
-        repo = r
-        factory = f
-    }
-    
-    func save() {
-        try! repo.save()
-    }
-    
-    public static var sharedInstance: AppConfigManager!
 }
