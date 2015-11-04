@@ -16,6 +16,8 @@
 		498F80921BE31075004ABBD5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 498F80901BE31075004ABBD5 /* LaunchScreen.storyboard */; };
 		498F809D1BE31075004ABBD5 /* VirtualTouristTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498F809C1BE31075004ABBD5 /* VirtualTouristTests.swift */; };
 		49C731D41BE985780011A891 /* AppConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C731D31BE985780011A891 /* AppConfigManager.swift */; };
+		49C731D61BE993660011A891 /* NsmAppConfigurationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C731D51BE993660011A891 /* NsmAppConfigurationRepository.swift */; };
+		49C731D81BE993A50011A891 /* NsmAppConfigurationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C731D71BE993A50011A891 /* NsmAppConfigurationFactory.swift */; };
 		49D6AF5C1BE70E8800DE69CB /* PinPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6AF5B1BE70E8800DE69CB /* PinPhoto.swift */; };
 		49D6AF5E1BE7118A00DE69CB /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6AF5D1BE7118A00DE69CB /* AppConfiguration.swift */; };
 		49D6AF601BE7128B00DE69CB /* InitialDataFiller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6AF5F1BE7128B00DE69CB /* InitialDataFiller.swift */; };
@@ -47,6 +49,8 @@
 		498F809C1BE31075004ABBD5 /* VirtualTouristTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualTouristTests.swift; sourceTree = "<group>"; };
 		498F809E1BE31075004ABBD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		49C731D31BE985780011A891 /* AppConfigManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfigManager.swift; sourceTree = "<group>"; };
+		49C731D51BE993660011A891 /* NsmAppConfigurationRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NsmAppConfigurationRepository.swift; sourceTree = "<group>"; };
+		49C731D71BE993A50011A891 /* NsmAppConfigurationFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NsmAppConfigurationFactory.swift; sourceTree = "<group>"; };
 		49D6AF5B1BE70E8800DE69CB /* PinPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinPhoto.swift; sourceTree = "<group>"; };
 		49D6AF5D1BE7118A00DE69CB /* AppConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		49D6AF5F1BE7128B00DE69CB /* InitialDataFiller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialDataFiller.swift; sourceTree = "<group>"; };
@@ -138,6 +142,8 @@
 				49E0B73B1BE701CA009239DF /* CoreDataStackManager.swift */,
 				49D6AF5F1BE7128B00DE69CB /* InitialDataFiller.swift */,
 				49C731D31BE985780011A891 /* AppConfigManager.swift */,
+				49C731D51BE993660011A891 /* NsmAppConfigurationRepository.swift */,
+				49C731D71BE993A50011A891 /* NsmAppConfigurationFactory.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -257,6 +263,8 @@
 				49D6AF5E1BE7118A00DE69CB /* AppConfiguration.swift in Sources */,
 				49D6AF601BE7128B00DE69CB /* InitialDataFiller.swift in Sources */,
 				49E0B73C1BE701CA009239DF /* CoreDataStackManager.swift in Sources */,
+				49C731D81BE993A50011A891 /* NsmAppConfigurationFactory.swift in Sources */,
+				49C731D61BE993660011A891 /* NsmAppConfigurationRepository.swift in Sources */,
 				498F80851BE31075004ABBD5 /* AppDelegate.swift in Sources */,
 				498F808D1BE31075004ABBD5 /* VirtualTourist.xcdatamodeld in Sources */,
 				497050621BE8419A00F098B2 /* MKMapView.swift in Sources */,
