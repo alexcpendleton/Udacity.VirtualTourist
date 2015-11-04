@@ -19,12 +19,11 @@ public class AppConfiguration : NSManagedObject {
         static let latitudeDelta = "latitudeDelta"
     }
     
-    
     @NSManaged var latitudeDelta: NSNumber
     @NSManaged var longitudeDelta: NSNumber
     @NSManaged var latitude: NSNumber
     @NSManaged var longitude: NSNumber
-    
+    /** Gets a coordinate for the current latitude and longitude values. */
     public var coordinate : CLLocationCoordinate2D {
         get {
             return CLLocationCoordinate2D(latitude: latitude.doubleValue, longitude: longitude.doubleValue)

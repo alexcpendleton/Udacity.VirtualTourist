@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4970505F1BE83D2500F098B2 /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4970505E1BE83D2500F098B2 /* MainMapViewController.swift */; };
-		497050621BE8419A00F098B2 /* MKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497050611BE8419A00F098B2 /* MKMapView.swift */; };
 		498F80851BE31075004ABBD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498F80841BE31075004ABBD5 /* AppDelegate.swift */; };
 		498F808A1BE31075004ABBD5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 498F80881BE31075004ABBD5 /* Main.storyboard */; };
 		498F808D1BE31075004ABBD5 /* VirtualTourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 498F808B1BE31075004ABBD5 /* VirtualTourist.xcdatamodeld */; };
@@ -37,7 +36,6 @@
 
 /* Begin PBXFileReference section */
 		4970505E1BE83D2500F098B2 /* MainMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
-		497050611BE8419A00F098B2 /* MKMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKMapView.swift; sourceTree = "<group>"; };
 		498F80811BE31075004ABBD5 /* VirtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		498F80841BE31075004ABBD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		498F80891BE31075004ABBD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -79,7 +77,6 @@
 		497050601BE8418D00F098B2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				497050611BE8419A00F098B2 /* MKMapView.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -267,7 +264,6 @@
 				49C731D61BE993660011A891 /* NsmAppConfigurationRepository.swift in Sources */,
 				498F80851BE31075004ABBD5 /* AppDelegate.swift in Sources */,
 				498F808D1BE31075004ABBD5 /* VirtualTourist.xcdatamodeld in Sources */,
-				497050621BE8419A00F098B2 /* MKMapView.swift in Sources */,
 				49C731D41BE985780011A891 /* AppConfigManager.swift in Sources */,
 				49E0B73F1BE70B54009239DF /* Pin.swift in Sources */,
 				49D6AF5C1BE70E8800DE69CB /* PinPhoto.swift in Sources */,

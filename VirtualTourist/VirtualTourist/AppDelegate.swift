@@ -13,12 +13,12 @@ import CoreData
 public class AppDelegate: UIResponder, UIApplicationDelegate {
 
     public var window: UIWindow?
-    /// Handles the initial filling of data for the first load of the app.
+    /** Handles the initial filling of data for the first load of the app. */
     public var dataFiller: InitialDataFiller!
+    /** Handles the Core Data stack for this application. */
     public var stackManager: CoreDataStackManager!
     
     public var appConfigRepo: NsmAppConfigurationRepository!
-    public var appConfigFactory: NsmAppConfigurationFactory!
     /** Handles the single AppConfiguration record that is used for
      maintaining application state between loads. */
     public var appConfigManager: AppConfigManager!
@@ -35,8 +35,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let context = stackManager.managedObjectContext
         appConfigRepo = NsmAppConfigurationRepository(context: context)
-        appConfigFactory = NsmAppConfigurationFactory(context: context)
-        dataFiller = InitialDataFiller(context: context, factory: appConfigFactory, repository: appConfigRepo)
+        dataFiller = InitialDataFiller(context: context, factory: NsmAppConfigurationFactory(context: context), repository: appConfigRepo)
         try! dataFiller.fillIfNecessary()
         
         appConfigManager = AppConfigManager(repo: appConfigRepo)
