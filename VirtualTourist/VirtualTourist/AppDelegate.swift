@@ -24,6 +24,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     public var appConfigManager: AppConfigManager!
     
     private static var _sharedInstance: AppDelegate!
+    
+    public var imageFetcher: ExternalImageFetchable!
     /** Gets the shared instance Singleton for the app's various configuration
      members and methods */
     public static func sharedInstance() -> AppDelegate {
@@ -39,6 +41,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         try! dataFiller.fillIfNecessary()
         
         appConfigManager = AppConfigManager(repo: appConfigRepo)
+        
+        imageFetcher = PlaceholderImageFetcher()
         
         AppDelegate._sharedInstance = self
         // Override point for customization after application launch.
