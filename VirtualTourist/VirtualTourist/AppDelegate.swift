@@ -22,10 +22,12 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     /** Handles the single AppConfiguration record that is used for
      maintaining application state between loads. */
     public var appConfigManager: AppConfigManager!
-    
     private static var _sharedInstance: AppDelegate!
     
+    public var placeholderMaker: PlaceholderImageFetcher!
     public var imageFetcher: ExternalImageFetchable!
+    public var metaDataFetcher: ImageMetaDataFetcher!
+    
     /** Gets the shared instance Singleton for the app's various configuration
      members and methods */
     public static func sharedInstance() -> AppDelegate {
@@ -41,8 +43,9 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         try! dataFiller.fillIfNecessary()
         
         appConfigManager = AppConfigManager(repo: appConfigRepo)
-        
-        imageFetcher = PlaceholderImageFetcher()
+        placeholderMaker = PlaceholderImageFetcher()
+        imageFetcher = placeholderMaker
+        metaDataFetcher = ImageMetaDataFetcher(maker: placeholderMaker)
         
         AppDelegate._sharedInstance = self
         // Override point for customization after application launch.

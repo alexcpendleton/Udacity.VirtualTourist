@@ -9,12 +9,16 @@
 import Foundation
 import UIKit
 import MapKit
+import PromiseKit
 
 public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDropManagerDelegate {
     @IBOutlet weak var map: MKMapView!
     public var startingPoint: CLLocationCoordinate2D?
+    
     public var appConfigManager: AppConfigManager!
     public var pinDropManager: PinDropManager!
+//    public var imageFetcher: PlaceholderImageFetcher!
+    public var metadataFetcher: ImageMetaDataFetcher!
     
     public func zoomTo(coordinate:CLLocationCoordinate2D) {
         map.setCenterCoordinate(coordinate, animated: true)
@@ -36,7 +40,11 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        appConfigManager = AppDelegate.sharedInstance().appConfigManager
+        
+        let app = AppDelegate.sharedInstance()
+        appConfigManager = app.appConfigManager
+        metadataFetcher = app.metaDataFetcher
+        
         let record = appConfigManager.record
         if startingPoint == nil {
             startingPoint = record.coordinate
@@ -51,14 +59,25 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
     
     public func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let region = mapView.region
-        print("region changed", region.span.longitudeDelta)
         appConfigManager.record.longitudeDelta = region.span.longitudeDelta
         appConfigManager.record.latitudeDelta = region.span.latitudeDelta
         appConfigManager.save()
+        print(appConfigManager.record)
     }
     
     public func pinDropped(annotation: MKPointAnnotation) {
-        
-        // TODO: Do something here....
+        let loader = metadataFetcher.fetch(annotation.coordinate)
+        let album = PhotoAlbumModel(coordinate: annotation.coordinate, members: loader)
+        presentAlbum(album)
+    }
+    
+    public func presentAlbum(album: PhotoAlbumModel) {
+        print("presentingAlbum : ", album)
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("PhotoAlbumViewController")
+            as! PhotoAlbumViewController
+        vc.model = album
+        navigationController?.pushViewController(vc, animated: true)
+        //presentViewController(vc, animated: true, completion: nil)
     }
 }
+

@@ -41,7 +41,7 @@ public class InitialDataFiller {
      Throws: Bubbles up exceptions from Core Data calls.
      */
     func fill() throws {
-        appConfigFactory.create(-122.0333687, latitude: 37.3318242, longitudeDelta: 6000, latitudeDelta: 6000)
+        appConfigFactory.create(-122.0333687, latitude: 37.3318242, longitudeDelta: 8.802282992708086, latitudeDelta: 11.37994597593392)
         try context.save()
     }
 }

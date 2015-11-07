@@ -14,47 +14,39 @@ import DRImagePlaceholderHelper
 
 public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var albumActivityIndicator: UIActivityIndicatorView!
+
     public var model: PhotoAlbumModel!
-    
     private var dataSource:[PhotoAlbumMember]?
     public var useTestingData = true
     
     public override func viewWillAppear(animated: Bool) {
-        if useTestingData {
-            let promise = Promise<[PhotoAlbumMember]> { fulfill, reject in
-                2.0.delay {
-                    var results = [PhotoAlbumMember]()
-                    let placeholderMaker = DRImagePlaceholderHelper.sharedInstance() as! DRImagePlaceholderHelper
-                    let size = CGSize(width: 200, height: 200)
-                    for _ in 1...50 {
-                        let placeholder = placeholderMaker.placerholderImageWithSize(size, text: "Loading...", fillColor: UIColor.redColor())
-                        let fetcher = Promise<UIImage> { f2, r2 in
-                            2.0.delay {
-                                f2(placeholderMaker.placerholderImageWithSize(size, text: "Done!", fillColor: UIColor.blueColor()))
-                            }
-                        }
-                        results.append(PhotoAlbumMember(placeholder: placeholder, fetcher: fetcher))
-                        fulfill(results)
-                    }
-                }
-            }
-            model = PhotoAlbumModel(coordinate: CLLocationCoordinate2DMake(0, 0), members: promise)
-        }
+        self.view.backgroundColor = self.view.backgroundColor?.colorWithAlphaComponent(0.75)
         
         super.viewWillAppear(animated)
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        // Look in the model, it should have an 
-        // array of placeholder images. For each of those
-        // go through and fetch each individually to fill
-        // in the appropriate image
-        model.members.then {
-            self.dataSource = $0
+        loadAlbum()
+    }
+    
+    public func loadAlbum() -> Promise<[PhotoAlbumMember]> {
+        // Loading the album includes looking up how many photos
+        // are at a given location. We want to show a spinner while
+        // that happens. It might not need to happen for a cached album.
+        // After that finishes, we then start loading in each photo 
+        // individually after we've added placeholder image views for
+        // each counted photo at this location.
+        
+        albumActivityIndicator.startAnimating()
+        
+        return model.members.then { (body:[PhotoAlbumMember]) -> Promise<[PhotoAlbumMember]>
+            in
+            self.dataSource = body
             self.collectionView.reloadData()
-            
+            self.albumActivityIndicator.stopAnimating()
+            return Promise<[PhotoAlbumMember]>(body)
         }
-//        dispatch_promise
     }
     
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -62,10 +54,21 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
     }
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PhotoAlbumCell", forIndexPath: indexPath)
-        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PhotoAlbumCell", forIndexPath: indexPath) as! PhotoAlbumCollectionViewCell
+        // When the member's image is nil, go fetch it
+        let item = self.dataSource![indexPath.row]
+        if item.image == nil {
+            cell.photo.image = item.placeholder
+            item.fetch().then { _ in cell.photo.image = item.image }
+        } else {
+            cell.photo.image = item.image
+        }
         return cell
     }
+}
+
+public class PhotoAlbumCollectionViewCell : UICollectionViewCell {
+    @IBOutlet public weak var photo: UIImageView!
 }
 
 public class PhotoAlbumModel {
