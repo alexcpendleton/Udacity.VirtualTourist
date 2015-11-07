@@ -22,9 +22,13 @@ public class PlaceholderImageFetcher : ExternalImageFetchable {
     public func getImages(amount:Int = 50) -> [AnyObject] {
         var results = [AnyObject]()
         for _ in 1...amount {
-            let image = placeholderMaker.placerholderImageWithSize(size)
+            let image = onePlaceholder()
             results.append(image)
         }
         return results
+    }
+    
+    public func onePlaceholder(color:UIColor = UIColor.blueColor()) -> UIImage {
+        return placeholderMaker.placerholderImageWithSize(size, text: "", fillColor: color)
     }
 }

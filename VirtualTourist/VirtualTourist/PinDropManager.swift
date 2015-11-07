@@ -28,6 +28,9 @@ public class PinDropManager : NSObject {
         let location = sender.locationInView(mapView)
         let asCoordinate = mapView.convertPoint(location, toCoordinateFromView: mapView)
         
+        // Remove the gesture recognition 
+        mapView.removeGestureRecognizer(pressRecognizer!)
+        
         let annotation = MKPointAnnotation()
         annotation.coordinate = asCoordinate
         dropPin(annotation)
@@ -37,6 +40,7 @@ public class PinDropManager : NSObject {
         // TODO: Make it so you can drag the pin around
         // TODO: Vibration when long press is registered?
         mapView.addAnnotation(annotation)
+        delegate?.pinDropped(annotation)
     }
 }
 
