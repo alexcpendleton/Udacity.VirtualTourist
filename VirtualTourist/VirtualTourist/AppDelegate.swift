@@ -44,7 +44,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appConfigManager = AppConfigManager(repo: appConfigRepo)
         placeholderMaker = PlaceholderImageFetcher()
-        imageFetcher = placeholderMaker
+        //imageFetcher =
         metaDataFetcher = ImageMetaDataFetcher(maker: placeholderMaker)
         
         AppDelegate._sharedInstance = self

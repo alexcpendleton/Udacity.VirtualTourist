@@ -11,7 +11,7 @@ import PromiseKit
 import MapKit
 import DRImagePlaceholderHelper
 
-public class PlaceholderImageFetcher : ExternalImageFetchable {
+public class PlaceholderImageFetcher {
     public var size = CGSize(width: 100, height: 100)
     public func images(forLocation: CLLocationCoordinate2D) -> Promise<[AnyObject]> {
         let result = Promise<[AnyObject]>(getImages())

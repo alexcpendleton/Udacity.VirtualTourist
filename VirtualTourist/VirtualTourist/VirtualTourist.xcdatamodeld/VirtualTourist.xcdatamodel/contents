@@ -6,21 +6,21 @@
         <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="longitudeDelta" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
     </entity>
-    <entity name="Pin" syncable="YES">
+    <entity name="Pin" representedClassName="Pin" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="photos" toMany="YES" deletionRule="Nullify" destinationEntity="PinPhoto" inverseName="pin" inverseEntity="PinPhoto" syncable="YES"/>
     </entity>
-    <entity name="PinPhoto" syncable="YES">
+    <entity name="PinPhoto" representedClassName="PinPhoto" syncable="YES">
+        <attribute name="filePath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sourceUri" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="pin" maxCount="1" deletionRule="Nullify" destinationEntity="Pin" inverseName="photos" inverseEntity="Pin" syncable="YES"/>
     </entity>
     <elements>
         <element name="AppConfiguration" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="Pin" positionX="-54" positionY="9" width="128" height="120"/>
-        <element name="PinPhoto" positionX="-36" positionY="45" width="128" height="90"/>
+        <element name="Pin" positionX="-54" positionY="9" width="128" height="105"/>
+        <element name="PinPhoto" positionX="-36" positionY="45" width="128" height="105"/>
     </elements>
 </model>
