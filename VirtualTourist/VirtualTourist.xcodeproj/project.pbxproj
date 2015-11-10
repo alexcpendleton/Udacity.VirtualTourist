@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4960E2CE1BF183B20013E993 /* PhotoAlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4960E2CD1BF183B20013E993 /* PhotoAlbumModel.swift */; };
+		4960E2D01BF183CF0013E993 /* PhotoAlbumMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4960E2CF1BF183CF0013E993 /* PhotoAlbumMember.swift */; };
 		4970505F1BE83D2500F098B2 /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4970505E1BE83D2500F098B2 /* MainMapViewController.swift */; };
 		498F80851BE31075004ABBD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498F80841BE31075004ABBD5 /* AppDelegate.swift */; };
 		498F808A1BE31075004ABBD5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 498F80881BE31075004ABBD5 /* Main.storyboard */; };
@@ -43,6 +45,8 @@
 
 /* Begin PBXFileReference section */
 		3E9EA4E4945EACCCE3D15894 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		4960E2CD1BF183B20013E993 /* PhotoAlbumModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumModel.swift; sourceTree = "<group>"; };
+		4960E2CF1BF183CF0013E993 /* PhotoAlbumMember.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumMember.swift; sourceTree = "<group>"; };
 		4970505E1BE83D2500F098B2 /* MainMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
 		498F80811BE31075004ABBD5 /* VirtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		498F80841BE31075004ABBD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +104,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4960E2CC1BF1838E0013E993 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				4960E2CD1BF183B20013E993 /* PhotoAlbumModel.swift */,
+				4960E2CF1BF183CF0013E993 /* PhotoAlbumMember.swift */,
+			);
+			name = ViewModels;
+			sourceTree = "<group>";
+		};
 		497050601BE8418D00F098B2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +147,7 @@
 				497050601BE8418D00F098B2 /* Extensions */,
 				49E0B73D1BE70B3A009239DF /* Entities */,
 				498F80A81BE31119004ABBD5 /* Common */,
+				4960E2CC1BF1838E0013E993 /* ViewModels */,
 				498F80A71BE31087004ABBD5 /* ViewControllers */,
 				498F80841BE31075004ABBD5 /* AppDelegate.swift */,
 				498F80881BE31075004ABBD5 /* Main.storyboard */,
@@ -367,8 +381,10 @@
 				49D6AF601BE7128B00DE69CB /* InitialDataFiller.swift in Sources */,
 				49E0B73C1BE701CA009239DF /* CoreDataStackManager.swift in Sources */,
 				49C731D81BE993A50011A891 /* NsmAppConfigurationFactory.swift in Sources */,
+				4960E2D01BF183CF0013E993 /* PhotoAlbumMember.swift in Sources */,
 				49ADC4091BEDA67E0084AC46 /* ImageMetadataFetcher.swift in Sources */,
 				49C731D61BE993660011A891 /* NsmAppConfigurationRepository.swift in Sources */,
+				4960E2CE1BF183B20013E993 /* PhotoAlbumModel.swift in Sources */,
 				49C731E21BEAF1C00011A891 /* PhotoAlbumViewController.swift in Sources */,
 				498F80851BE31075004ABBD5 /* AppDelegate.swift in Sources */,
 				498F808D1BE31075004ABBD5 /* VirtualTourist.xcdatamodeld in Sources */,

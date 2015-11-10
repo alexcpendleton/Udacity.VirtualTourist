@@ -15,12 +15,16 @@ import DRImagePlaceholderHelper
 public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var albumActivityIndicator: UIActivityIndicatorView!
+    var tapRecognizer: UITapGestureRecognizer!
 
     public var model: PhotoAlbumModel!
     private var dataSource:[PhotoAlbumMember]?
     public var useTestingData = true
     
     public override func viewWillAppear(animated: Bool) {
+        tapRecognizer = UITapGestureRecognizer(target: self, action: "onSingleTap:")
+        self.view.addGestureRecognizer(tapRecognizer)
+        
         self.view.backgroundColor = self.view.backgroundColor?.colorWithAlphaComponent(0.75)
         
         super.viewWillAppear(animated)
@@ -28,6 +32,12 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
         collectionView.dataSource = self
         
         loadAlbum()
+    }
+    
+    func onSingleTap(sender:UIGestureRecognizer) {
+        // See if they clicked outside the collection view, meaning
+        // we should close the view
+        sender.locationInView(collectionView)
     }
     
     public func loadAlbum() -> Promise<[PhotoAlbumMember]> {
@@ -39,11 +49,13 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
         // each counted photo at this location.
         
         albumActivityIndicator.startAnimating()
+        collectionView.backgroundColor = collectionView.backgroundColor?.colorWithAlphaComponent(0.75)
         
         return model.members.then { (body:[PhotoAlbumMember]) -> Promise<[PhotoAlbumMember]>
             in
             self.dataSource = body
             self.collectionView.reloadData()
+            self.collectionView.backgroundColor = self.collectionView.backgroundColor?.colorWithAlphaComponent(1)
             self.albumActivityIndicator.stopAnimating()
             return Promise<[PhotoAlbumMember]>(body)
         }
@@ -69,32 +81,4 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
 
 public class PhotoAlbumCollectionViewCell : UICollectionViewCell {
     @IBOutlet public weak var photo: UIImageView!
-}
-
-public class PhotoAlbumModel {
-    init(coordinate: CLLocationCoordinate2D, members: Promise<[PhotoAlbumMember]>) {
-        self.coordinate = coordinate
-        self.members = members
-    }
-    public var members: Promise<[PhotoAlbumMember]>
-    public var coordinate: CLLocationCoordinate2D
-}
-
-public class PhotoAlbumMember {
-    init(placeholder: UIImage, fetcher:Promise<UIImage>) {
-        self.fetcher = fetcher
-        self.placeholder = placeholder
-    }
-    
-    public var image: UIImage?
-    public var placeholder: UIImage
-    public var isSelected = false
-    public var fetcher: Promise<UIImage>
-
-    public func fetch() -> Promise<PhotoAlbumMember> {
-        return when(fetcher).then { (fetchedImage: [UIImage]) -> Promise<PhotoAlbumMember> in
-            self.image = fetchedImage.first!
-            return Promise<PhotoAlbumMember>(self)
-        }
-    }
 }

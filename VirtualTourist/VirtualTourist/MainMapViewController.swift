@@ -75,9 +75,10 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
         print("presentingAlbum : ", album)
         let vc = storyboard?.instantiateViewControllerWithIdentifier("PhotoAlbumViewController")
             as! PhotoAlbumViewController
+        self.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         vc.model = album
-        navigationController?.pushViewController(vc, animated: true)
-        //presentViewController(vc, animated: true, completion: nil)
+        //navigationController?.pushViewController(vc, animated: true)
+        presentViewController(vc, animated: false, completion: nil)
     }
 }
 
