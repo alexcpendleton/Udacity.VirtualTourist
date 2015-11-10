@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import MapKit
 
 @objc(Pin)
 public class Pin : NSManagedObject {
@@ -22,6 +23,10 @@ public class Pin : NSManagedObject {
     @NSManaged var longitude: NSNumber
     @NSManaged var id: NSNumber
     @NSManaged var photos: [PinPhoto]
+    
+    public var coordinate: CLLocationCoordinate2D {
+        get { return CLLocationCoordinate2D(latitude: latitude.doubleValue, longitude: self.longitude.doubleValue) }
+    }
     
     init(dictionary: [String:AnyObject], context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)
