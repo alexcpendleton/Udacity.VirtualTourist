@@ -17,8 +17,33 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
     
     public var appConfigManager: AppConfigManager!
     public var pinDropManager: PinDropManager!
-//    public var imageFetcher: PlaceholderImageFetcher!
     public var metadataFetcher: ImageMetaDataFetcher!
+    public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator)!
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let app = AppDelegate.sharedInstance()
+        appConfigManager = app.appConfigManager
+        metadataFetcher = app.metaDataFetcher
+        albumCoordinators = app.albumCoordinators
+        
+        
+        let record = appConfigManager.record
+        if startingPoint == nil {
+            startingPoint = record.coordinate
+            zoomTo(startingPoint!)
+        }
+        let region = MKCoordinateRegionMake(startingPoint!, makeSpan(record))
+        map.setRegion(region, animated: true)
+        
+        pinDropManager = PinDropManager(mapView: map, delegate: self)
+        pinDropManager.register()
+    }
     
     public func zoomTo(coordinate:CLLocationCoordinate2D) {
         map.setCenterCoordinate(coordinate, animated: true)
@@ -34,28 +59,6 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
         return span
     }
     
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    public override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        let app = AppDelegate.sharedInstance()
-        appConfigManager = app.appConfigManager
-        metadataFetcher = app.metaDataFetcher
-        
-        let record = appConfigManager.record
-        if startingPoint == nil {
-            startingPoint = record.coordinate
-            zoomTo(startingPoint!)
-        }
-        let region = MKCoordinateRegionMake(startingPoint!, makeSpan(record))
-        map.setRegion(region, animated: true)
-        
-        pinDropManager = PinDropManager(mapView: map, delegate: self)
-        pinDropManager.register()
-    }
     
     public func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let region = mapView.region
@@ -66,9 +69,9 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
     }
     
     public func pinDropped(annotation: MKPointAnnotation) {
-        let loader = metadataFetcher.fetch(annotation.coordinate)
-        let album = PhotoAlbumModel(coordinate: annotation.coordinate, members: loader)
-        presentAlbum(album)
+        try! albumCoordinators.new.makeAlbum(annotation.coordinate).then {
+            self.presentAlbum($0)
+        }
     }
     
     public func presentAlbum(album: PhotoAlbumModel) {
