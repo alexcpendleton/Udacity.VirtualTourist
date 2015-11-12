@@ -19,6 +19,7 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
     public var pinDropManager: PinDropManager!
     public var metadataFetcher: ImageMetaDataFetcher!
     public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator)!
+    public var albumMediator: WorkingAlbumMediator!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +32,7 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
         appConfigManager = app.appConfigManager
         metadataFetcher = app.metaDataFetcher
         albumCoordinators = app.albumCoordinators
-        
+        albumMediator = app.albumMediator
         
         let record = appConfigManager.record
         if startingPoint == nil {
@@ -76,12 +77,11 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
     
     public func presentAlbum(album: PhotoAlbumModel) {
         print("presentingAlbum : ", album)
-        let vc = storyboard?.instantiateViewControllerWithIdentifier("PhotoAlbumViewController")
-            as! PhotoAlbumViewController
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("PhotoAlbumRootNavigationController")
+            as! UINavigationController
         self.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-        vc.model = album
+        albumMediator.album = album
         //navigationController?.pushViewController(vc, animated: true)
-        presentViewController(vc, animated: false, completion: nil)
+        presentViewController(vc, animated: true, completion: nil)
     }
 }
-

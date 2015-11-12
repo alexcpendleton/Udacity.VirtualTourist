@@ -29,6 +29,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     public var metaDataFetcher: ImageMetaDataFetcher!
     public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator)!
     
+    public var albumMediator: WorkingAlbumMediator!
+    
     /** Gets the shared instance Singleton for the app's various configuration
      members and methods */
     public static func sharedInstance() -> AppDelegate {
@@ -47,6 +49,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         placeholderMaker = PlaceholderImageFetcher()
         imageFetcher = PlaceholderImageFetcher()
         metaDataFetcher = ImageMetaDataFetcher(maker: placeholderMaker)
+        albumMediator = WorkingAlbumMediator()
             
         if true {
             let placeholder = placeholderMaker.onePlaceholder()

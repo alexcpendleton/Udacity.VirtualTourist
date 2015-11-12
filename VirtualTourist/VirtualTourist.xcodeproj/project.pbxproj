@@ -33,6 +33,7 @@
 		49E02D791BF1AE7D0097E0C3 /* ExistingAlbumCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E02D781BF1AE7D0097E0C3 /* ExistingAlbumCoordinator.swift */; };
 		49E0B73C1BE701CA009239DF /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E0B73B1BE701CA009239DF /* CoreDataStackManager.swift */; };
 		49E0B73F1BE70B54009239DF /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E0B73E1BE70B54009239DF /* Pin.swift */; };
+		49F8039C1BF4476300C1FA1E /* WorkingAlbumMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F8039B1BF4476300C1FA1E /* WorkingAlbumMediator.swift */; };
 		769E67CF8EBAC1510CD001D2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DEA3C8D39CFCE63D916EAB2 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +80,7 @@
 		49E02D781BF1AE7D0097E0C3 /* ExistingAlbumCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistingAlbumCoordinator.swift; sourceTree = "<group>"; };
 		49E0B73B1BE701CA009239DF /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		49E0B73E1BE70B54009239DF /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
+		49F8039B1BF4476300C1FA1E /* WorkingAlbumMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkingAlbumMediator.swift; sourceTree = "<group>"; };
 		9DEA3C8D39CFCE63D916EAB2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B6498E5E3519AA1B513428 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,6 +196,7 @@
 				49C731D51BE993660011A891 /* NsmAppConfigurationRepository.swift */,
 				49C731D71BE993A50011A891 /* NsmAppConfigurationFactory.swift */,
 				49C731D91BE9A01E0011A891 /* PinDropManager.swift */,
+				49F8039B1BF4476300C1FA1E /* WorkingAlbumMediator.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				49C731E01BE9A8380011A891 /* PlaceholderImageFetcher.swift in Sources */,
 				49E0B73F1BE70B54009239DF /* Pin.swift in Sources */,
 				49D6AF5C1BE70E8800DE69CB /* PinPhoto.swift in Sources */,
+				49F8039C1BF4476300C1FA1E /* WorkingAlbumMediator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

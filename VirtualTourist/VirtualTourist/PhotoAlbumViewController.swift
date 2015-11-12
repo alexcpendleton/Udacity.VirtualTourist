@@ -15,11 +15,27 @@ import DRImagePlaceholderHelper
 public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var albumActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     var tapRecognizer: UITapGestureRecognizer!
-
+    
     public var model: PhotoAlbumModel!
     private var dataSource:[PhotoAlbumMember]?
     public var useTestingData = true
+    
+    @IBAction func doneOnTouchUpInside(sender: AnyObject?) {
+        close()
+    }
+    
+    public func close() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        if model == nil {
+            model = AppDelegate.sharedInstance().albumMediator.album!
+        }
+    }
     
     public override func viewWillAppear(animated: Bool) {
         tapRecognizer = UITapGestureRecognizer(target: self, action: "onSingleTap:")
