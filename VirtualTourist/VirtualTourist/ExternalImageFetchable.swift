@@ -11,9 +11,5 @@ import MapKit
 import PromiseKit
 
 public protocol ExternalImageFetchable {
-    func images(forLocation:CLLocationCoordinate2D, atMost: Int) -> Promise<[ImageRepresentable]>
-}
-
-public protocol ImageRepresentable {
-    var uri: String {get}
+    func images(forLocation:CLLocationCoordinate2D, atMost: Int) -> Promise<[String]>
 }

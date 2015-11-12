@@ -11,22 +11,20 @@ import PromiseKit
 import MapKit
 import DRImagePlaceholderHelper
 
-public class PlaceholderImageFetcher {
+public class PlaceholderImageFetcher : ExternalImageFetchable {
     public var size = CGSize(width: 100, height: 100)
-    public func images(forLocation: CLLocationCoordinate2D) -> Promise<[AnyObject]> {
-        let result = Promise<[AnyObject]>(getImages())
-        return result
-    }
-    var placeholderMaker = { DRImagePlaceholderHelper.sharedInstance() as! DRImagePlaceholderHelper }()
-    
-    public func getImages(amount:Int = 50) -> [AnyObject] {
-        var results = [AnyObject]()
-        for _ in 1...amount {
-            let image = onePlaceholder()
-            results.append(image)
+
+    public func images(forLocation: CLLocationCoordinate2D, atMost: Int) -> Promise<[String]> {
+        var results = [String]()
+        for _ in 1...atMost {
+            // We use an empty URI to force usage of a placeholder
+            // Sort of silly, but it's just for testing code...
+            results.append("")
         }
-        return results
+        return Promise<[String]>(results)
     }
+    
+    var placeholderMaker = { DRImagePlaceholderHelper.sharedInstance() as! DRImagePlaceholderHelper }()
     
     public func onePlaceholder(color:UIColor = UIColor.blueColor()) -> UIImage {
         return placeholderMaker.placerholderImageWithSize(size, text: "", fillColor: color)

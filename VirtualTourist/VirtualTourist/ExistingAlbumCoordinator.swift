@@ -27,9 +27,12 @@ public class ExistingAlbumCoordinator {
     
     public func makeAlbum(source: Pin) throws -> Promise<PhotoAlbumModel> {
         var items = [PhotoAlbumMember]()
-        for photo in source.photos {
-            let m = PhotoAlbumMember(placeholder: self.placeholder, fetcher: readImageFromFileSystem(photo.filePath))
-            items.append(m)
+
+        for p in source.photos {
+            if let photo = p as? PinPhoto {
+                let m = PhotoAlbumMember(placeholder: self.placeholder, fetcher: readImageFromFileSystem(photo.filePath))
+                items.append(m)
+            }
         }
         let model = PhotoAlbumModel(coordinate: source.coordinate, members: Promise<[PhotoAlbumMember]>(items))
         return Promise<PhotoAlbumModel>(model)

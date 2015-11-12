@@ -27,6 +27,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     public var placeholderMaker: PlaceholderImageFetcher!
     public var imageFetcher: ExternalImageFetchable!
     public var metaDataFetcher: ImageMetaDataFetcher!
+    public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator)!
     
     /** Gets the shared instance Singleton for the app's various configuration
      members and methods */
@@ -44,8 +45,15 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appConfigManager = AppConfigManager(repo: appConfigRepo)
         placeholderMaker = PlaceholderImageFetcher()
-        //imageFetcher =
+        imageFetcher = PlaceholderImageFetcher()
         metaDataFetcher = ImageMetaDataFetcher(maker: placeholderMaker)
+            
+        if true {
+            let placeholder = placeholderMaker.onePlaceholder()
+            let n = NewAlbumCoordinator(nsContext: context, flickr: imageFetcher, organizer: PhotoOrganizer(), placeholder: placeholder)
+            let e = ExistingAlbumCoordinator(nsContext: context, placeholder: placeholder)
+            albumCoordinators = (n, e)
+        }
         
         AppDelegate._sharedInstance = self
         // Override point for customization after application launch.

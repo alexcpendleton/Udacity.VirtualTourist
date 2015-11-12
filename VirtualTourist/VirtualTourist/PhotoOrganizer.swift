@@ -15,7 +15,14 @@ public class PhotoOrganizer {
         return (documentsDirectory() + "/\(NSUUID().UUIDString).png")
     }
     
-    public func save(target: UIImage, path: String) throws {
+    public func save(target: UIImage, path: String, overwrite: Bool) throws {
+        let filePath = FKPath(path)
+        
+        // Don't overwrite any existing files one's there
+        if (!overwrite && filePath.exists) {
+            return
+        }
+        
         try target.writeToPath(FKPath(path))
     }
     
@@ -23,4 +30,6 @@ public class PhotoOrganizer {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         return paths[0]
     }
+    
+    
 }

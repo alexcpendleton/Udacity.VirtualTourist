@@ -15,14 +15,11 @@ public class Pin : NSManagedObject {
     struct Keys {
         static let latitude = "latitude"
         static let longitude = "longitude"
-        static let id = "id"
-        //static let photos = "photos"
     }
     
     @NSManaged var latitude: NSNumber
     @NSManaged var longitude: NSNumber
-    @NSManaged var id: NSNumber
-    @NSManaged var photos: [PinPhoto]
+    @NSManaged var photos: NSSet
     
     public var coordinate: CLLocationCoordinate2D {
         get { return CLLocationCoordinate2D(latitude: latitude.doubleValue, longitude: self.longitude.doubleValue) }
@@ -33,13 +30,12 @@ public class Pin : NSManagedObject {
         super.init(entity: entity!, insertIntoManagedObjectContext: context)
         latitude = dictionary[Keys.latitude] as! NSNumber
         longitude = dictionary[Keys.longitude] as! NSNumber
-        id = dictionary[Keys.id] as! NSNumber
     }
     
     convenience init(lat:NSNumber, lon:NSNumber, context: NSManagedObjectContext) {
         self.init(dictionary: [
             Keys.latitude: lat,
-            Keys.longitude: lon
+            Keys.longitude: lon,
         ], context: context)
     }
 }
