@@ -38,7 +38,7 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        map.removeAnnotations(map.annotations)
         let record = appConfigManager.record
         if startingPoint == nil {
             startingPoint = record.coordinate
@@ -92,11 +92,13 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
     }
     
     public func pinDropped(annotation: AlbumPointAnnotation) {
-        try! albumCoordinators.new.makeAlbum(annotation.coordinate).then {
-            self.presentAlbum($0)
-        }
+        try! albumCoordinators.new.makeAlbum(annotation.coordinate).then({ (album:PhotoAlbumModel, pinRecord:Pin) -> Promise<PhotoAlbumModel> in
+            annotation.pin = pinRecord
+            self.presentAlbum(album)
+            return Promise<PhotoAlbumModel>(album)
+        })
     }
-    
+
     public func presentAlbum(album: PhotoAlbumModel) {
         print("presentingAlbum : ", album)
         let vc = storyboard?.instantiateViewControllerWithIdentifier("PhotoAlbumRootNavigationController")

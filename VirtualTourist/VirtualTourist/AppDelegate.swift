@@ -53,8 +53,9 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
             
         if true {
             let placeholder = placeholderMaker.onePlaceholder()
-            let n = NewAlbumCoordinator(nsContext: context, flickr: imageFetcher, organizer: PhotoOrganizer(), placeholder: placeholder)
-            let e = ExistingAlbumCoordinator(nsContext: context, placeholder: placeholder)
+            let organizer = PhotoOrganizer()
+            let n = NewAlbumCoordinator(nsContext: context, flickr: imageFetcher, organizer: organizer, placeholder: placeholder)
+            let e = ExistingAlbumCoordinator(nsContext: context, placeholder: placeholder, organizer: organizer)
             albumCoordinators = (n, e)
         }
         
