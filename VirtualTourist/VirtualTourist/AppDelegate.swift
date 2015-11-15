@@ -47,7 +47,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appConfigManager = AppConfigManager(repo: appConfigRepo)
         placeholderMaker = PlaceholderImageFetcher()
-        imageFetcher = PlaceholderImageFetcher()
+        imageFetcher = PlaceholditFetcher()
         metaDataFetcher = ImageMetaDataFetcher(maker: placeholderMaker)
         albumMediator = WorkingAlbumMediator()
             

@@ -9,14 +9,17 @@
 import Foundation
 import UIKit
 import MapKit
+import CoreData
 
 public class PinDropManager : NSObject {
-    init(mapView mv: MKMapView, delegate d: PinDropManagerDelegate? = nil) {
+    init(mapView mv: MKMapView, context c: NSManagedObjectContext, delegate d: PinDropManagerDelegate? = nil) {
         mapView = mv
         delegate = d
+        context = c
     }
     var pressRecognizer: UILongPressGestureRecognizer?
     let mapView: MKMapView
+    let context: NSManagedObjectContext
     public var delegate: PinDropManagerDelegate? = nil
     
     func register() {
@@ -31,12 +34,12 @@ public class PinDropManager : NSObject {
         // Remove the gesture recognition 
         mapView.removeGestureRecognizer(pressRecognizer!)
         
-        let annotation = MKPointAnnotation()
+        let annotation = AlbumPointAnnotation(pin: Pin(lat: asCoordinate.latitude, lon: asCoordinate.longitude, context: context))
         annotation.coordinate = asCoordinate
         dropPin(annotation)
     }
     
-    func dropPin(annotation: MKPointAnnotation) {
+    func dropPin(annotation: AlbumPointAnnotation) {
         // TODO: Make it so you can drag the pin around
         // TODO: Vibration when long press is registered?
         mapView.addAnnotation(annotation)
@@ -45,5 +48,5 @@ public class PinDropManager : NSObject {
 }
 
 public protocol PinDropManagerDelegate {
-    func pinDropped(annotation: MKPointAnnotation)
+    func pinDropped(annotation: AlbumPointAnnotation)
 }
