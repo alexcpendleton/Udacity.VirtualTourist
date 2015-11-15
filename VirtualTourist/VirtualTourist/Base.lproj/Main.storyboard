@@ -49,7 +49,7 @@
         <!--Photo Album View-->
         <scene sceneID="gun-Jy-bRm">
             <objects>
-                <viewController storyboardIdentifier="PhotoAlbumViewController" title="Photo Album View" modalPresentationStyle="overCurrentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="m1J-LK-POb" customClass="PhotoAlbumViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoAlbumViewController" title="Photo Album View" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="overCurrentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="m1J-LK-POb" customClass="PhotoAlbumViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6ZP-AB-vuG"/>
                         <viewControllerLayoutGuide type="bottom" id="Qdv-rC-qPE"/>
@@ -58,7 +58,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="22Y-R8-hcq">
+                            <collectionView clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="22Y-R8-hcq">
                                 <rect key="frame" x="0.0" y="148" width="600" height="452"/>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -71,13 +71,13 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <activityIndicatorView key="backgroundView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="jwF-IH-s90">
-                                    <rect key="frame" x="0.0" y="-64" width="600" height="452"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="452"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="color" red="0.12324084289999999" green="0.4578794316" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </activityIndicatorView>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoAlbumCell" id="aJP-Od-L9y" customClass="PhotoAlbumCollectionViewCell" customModule="VirtualTourist" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="64" width="100" height="100"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" reuseIdentifier="PhotoAlbumCell" id="aJP-Od-L9y" customClass="PhotoAlbumCollectionViewCell" customModule="VirtualTourist" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -107,12 +107,12 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="22Y-R8-hcq" secondAttribute="trailing" constant="-20" id="6iE-9b-5dR"/>
-                            <constraint firstItem="22Y-R8-hcq" firstAttribute="top" secondItem="6ZP-AB-vuG" secondAttribute="bottom" constant="128" id="dYq-Fs-szF"/>
+                            <constraint firstItem="22Y-R8-hcq" firstAttribute="top" secondItem="6ZP-AB-vuG" secondAttribute="bottom" constant="84" id="dYq-Fs-szF"/>
                             <constraint firstItem="Qdv-rC-qPE" firstAttribute="top" secondItem="22Y-R8-hcq" secondAttribute="bottom" id="yZe-0d-o5d"/>
                             <constraint firstItem="22Y-R8-hcq" firstAttribute="leading" secondItem="eyH-yh-aSB" secondAttribute="leadingMargin" constant="-20" id="zMi-H7-znq"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="ErA-VY-BP5">
+                    <navigationItem key="navigationItem" id="ErA-VY-BP5">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="qcj-YJ-xSO">
                             <connections>
                                 <action selector="doneOnTouchUpInside:" destination="m1J-LK-POb" id="dss-Uk-at9"/>
