@@ -32,6 +32,10 @@ public class Pin : NSManagedObject {
         longitude = dictionary[Keys.longitude] as! NSNumber
     }
     
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
     convenience init(lat:NSNumber, lon:NSNumber, context: NSManagedObjectContext) {
         self.init(dictionary: [
             Keys.latitude: lat,

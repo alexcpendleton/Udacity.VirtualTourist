@@ -33,4 +33,7 @@ class PinPhoto : NSManagedObject {
             Keys.filePath: path,
         ], context: context)
     }
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
 }

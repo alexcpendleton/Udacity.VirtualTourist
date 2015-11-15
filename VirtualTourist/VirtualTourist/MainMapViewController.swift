@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MapKit
 import PromiseKit
+import CoreData
 
 public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDropManagerDelegate {
     @IBOutlet weak var map: MKMapView!
@@ -20,19 +21,23 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
     public var metadataFetcher: ImageMetaDataFetcher!
     public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator)!
     public var albumMediator: WorkingAlbumMediator!
+    public var context: NSManagedObjectContext!
+    
+    var loadedPins = [Pin]()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    public override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
         
         let app = AppDelegate.sharedInstance()
         appConfigManager = app.appConfigManager
         metadataFetcher = app.metaDataFetcher
         albumCoordinators = app.albumCoordinators
         albumMediator = app.albumMediator
+        context = app.stackManager.managedObjectContext
+    }
+    
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
         let record = appConfigManager.record
         if startingPoint == nil {
@@ -42,8 +47,10 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
         let region = MKCoordinateRegionMake(startingPoint!, makeSpan(record))
         map.setRegion(region, animated: true)
         
-        pinDropManager = PinDropManager(mapView: map, delegate: self)
+        pinDropManager = PinDropManager(mapView: map, context: context, delegate: self)
         pinDropManager.register()
+        
+        loadExistingAlbumsAsAnnotations()
     }
     
     public func zoomTo(coordinate:CLLocationCoordinate2D) {
@@ -60,6 +67,21 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
         return span
     }
     
+    public func loadExistingAlbumsAsAnnotations() {
+        let request = NSFetchRequest(entityName: "Pin")
+        do {
+            for record in try context.executeFetchRequest(request) {
+                if let pin = record as? Pin {
+                    loadedPins.append(pin)
+                    map.addAnnotation(AlbumPointAnnotation(pin: pin))
+                }
+            }
+        }
+        catch _ {
+            print("There was an issue fetching the pins...")
+        }
+    }
+    
     
     public func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let region = mapView.region
@@ -69,7 +91,7 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
         print(appConfigManager.record)
     }
     
-    public func pinDropped(annotation: MKPointAnnotation) {
+    public func pinDropped(annotation: AlbumPointAnnotation) {
         try! albumCoordinators.new.makeAlbum(annotation.coordinate).then {
             self.presentAlbum($0)
         }
@@ -83,5 +105,25 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
         albumMediator.album = album
         //navigationController?.pushViewController(vc, animated: true)
         presentViewController(vc, animated: true, completion: nil)
+    }
+    
+    public func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        if let pinAnnotation = view.annotation as? AlbumPointAnnotation {
+            try! albumCoordinators.existing.makeAlbum(pinAnnotation.pin!).then({ (model:PhotoAlbumModel) -> Promise<PhotoAlbumModel> in
+                self.presentAlbum(model)
+                return Promise<PhotoAlbumModel>(model)
+            })
+        }
+    }
+}
+
+public class AlbumPointAnnotation : MKPointAnnotation {
+    var pin: Pin?
+    init(pin: Pin?) {
+        super.init()
+        self.pin = pin
+        if pin != nil {
+            self.coordinate = pin!.coordinate
+        }
     }
 }
