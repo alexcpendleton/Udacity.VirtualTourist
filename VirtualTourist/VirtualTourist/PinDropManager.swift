@@ -34,7 +34,7 @@ public class PinDropManager : NSObject {
         // Remove the gesture recognition 
         mapView.removeGestureRecognizer(pressRecognizer!)
         
-        let annotation = AlbumPointAnnotation(pin: Pin(lat: asCoordinate.latitude, lon: asCoordinate.longitude, context: context))
+        let annotation = AlbumPointAnnotation(pin: nil)
         annotation.coordinate = asCoordinate
         dropPin(annotation)
     }

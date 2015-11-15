@@ -26,17 +26,14 @@ public class Pin : NSManagedObject {
         get { return CLLocationCoordinate2D(latitude: latitude.doubleValue, longitude: self.longitude.doubleValue) }
     }
     
-    init(dictionary: [String:AnyObject], context: NSManagedObjectContext) {
+    convenience init(dictionary: [String:AnyObject], context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)
-        super.init(entity: entity!, insertIntoManagedObjectContext: context)
+        self.init(entity: entity!, insertIntoManagedObjectContext: context)
         latitude = dictionary[Keys.latitude] as! NSNumber
         longitude = dictionary[Keys.longitude] as! NSNumber
         //photos = dictionary[Keys.photos] as! NSSet
     }
     
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
-    }
     
     convenience init(lat:NSNumber, lon:NSNumber, context: NSManagedObjectContext) {
         self.init(dictionary: [

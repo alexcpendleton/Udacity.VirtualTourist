@@ -105,7 +105,6 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
             as! UINavigationController
         self.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         albumMediator.album = album
-        //navigationController?.pushViewController(vc, animated: true)
         presentViewController(vc, animated: true, completion: nil)
     }
     
@@ -126,6 +125,7 @@ public class AlbumPointAnnotation : MKPointAnnotation {
         self.pin = pin
         if pin != nil {
             self.coordinate = pin!.coordinate
+            _ = pin!.photos
         }
     }
 }
