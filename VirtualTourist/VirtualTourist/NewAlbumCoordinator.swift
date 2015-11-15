@@ -38,12 +38,13 @@ public class NewAlbumCoordinator {
                 // We don't want to download the image here, wait until
                 // it gets displayed. However, we do want to know where
                 // it will live.
-                let path = self.organizer.makeUniquePath()
+                let fileName = self.organizer.makeUniquePng()
                 
                 // Now make the record and associate it with our Pin
-                let ppRecord = PinPhoto(uri: item, path: path, context: self.context)
+                let ppRecord = PinPhoto(uri: item, fileName: fileName, context: self.context)
                 ppRecord.pin = pinRecord
                 photosForPin.append(ppRecord)
+                
             }
             pinRecord.photos = NSSet(array: photosForPin)
             try self.context.save()
@@ -68,18 +69,19 @@ public class NewAlbumCoordinator {
         })
     }
     
-    public func makeAlbum(forLocation: CLLocationCoordinate2D) throws -> Promise<PhotoAlbumModel> {
-        return try make(forLocation).then { (pin:Pin) -> Promise<PhotoAlbumModel> in
+    public func makeAlbum(forLocation: CLLocationCoordinate2D) throws -> Promise<(PhotoAlbumModel, Pin)> {
+        return try make(forLocation).then { (pin:Pin) -> Promise<(PhotoAlbumModel, Pin)> in
             var items = [PhotoAlbumMember]()
             for p in pin.photos {
                 if let photo = p as? PinPhoto {
+                    let fullPath = photo.fullPath(self.organizer)
                     let m = PhotoAlbumMember(placeholder: self.placeholder,
-                        fetcher: self.downloadAndStoreImage(photo.sourceUri, to: photo.filePath))
+                        fetcher: self.downloadAndStoreImage(photo.sourceUri, to: fullPath))
                     items.append(m)
                 }
             }
             let model = PhotoAlbumModel(coordinate: forLocation, members: Promise<[PhotoAlbumMember]>(items))
-            return Promise<PhotoAlbumModel>(model)
+            return Promise<(PhotoAlbumModel, Pin)>(model, pin)
         }
     }
 }

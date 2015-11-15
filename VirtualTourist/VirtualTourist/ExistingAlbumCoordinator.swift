@@ -15,10 +15,12 @@ import MapKit
 public class ExistingAlbumCoordinator {
     let context: NSManagedObjectContext
     let placeholder: UIImage
+    let organizer: PhotoOrganizer
     
-    init(nsContext: NSManagedObjectContext, placeholder ph:UIImage) {
+    init(nsContext: NSManagedObjectContext, placeholder ph:UIImage, organizer o: PhotoOrganizer) {
         self.context = nsContext
         self.placeholder = ph
+        self.organizer = o
     }
     
     public func readImageFromFileSystem(path: String) -> Promise<UIImage> {
@@ -27,14 +29,18 @@ public class ExistingAlbumCoordinator {
     
     public func makeAlbum(source: Pin) throws -> Promise<PhotoAlbumModel> {
         var items = [PhotoAlbumMember]()
-
-        for p in source.photos {
+        //let whatevs = source.valueForKey("photos")
+        let fu = source.photos
+        let iterable = source.photos // source.valueForKey("photos") as! NSSet
+        for p in iterable {
             if let photo = p as? PinPhoto {
-                let m = PhotoAlbumMember(placeholder: self.placeholder, fetcher: readImageFromFileSystem(photo.filePath))
+                let fullPath = organizer.path(photo.fileName)
+                let m = PhotoAlbumMember(placeholder: self.placeholder, fetcher: readImageFromFileSystem(fullPath))
                 items.append(m)
             }
         }
         let model = PhotoAlbumModel(coordinate: source.coordinate, members: Promise<[PhotoAlbumMember]>(items))
+        
         return Promise<PhotoAlbumModel>(model)
     }
 }
