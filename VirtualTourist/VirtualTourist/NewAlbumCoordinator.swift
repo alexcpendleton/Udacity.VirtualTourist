@@ -46,7 +46,7 @@ public class NewAlbumCoordinator {
                 photosForPin.append(ppRecord)
                 
             }
-            pinRecord.photos = NSSet(array: photosForPin)
+            //pinRecord.photos = NSSet(array: photosForPin)
             try self.context.save()
             return Promise<Pin>(pinRecord)
         }

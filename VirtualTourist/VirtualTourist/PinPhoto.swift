@@ -21,9 +21,9 @@ class PinPhoto : NSManagedObject {
     @NSManaged var fileName: String
     @NSManaged var pin: Pin
     
-    init(dictionary: [String:AnyObject], context: NSManagedObjectContext) {
+    convenience init(dictionary: [String:AnyObject], context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("PinPhoto", inManagedObjectContext: context)
-        super.init(entity: entity!, insertIntoManagedObjectContext: context)
+        self.init(entity: entity!, insertIntoManagedObjectContext: context)
         sourceUri = dictionary[Keys.sourceUri] as! String
         fileName = dictionary[Keys.fileName] as! String
     }
@@ -32,9 +32,6 @@ class PinPhoto : NSManagedObject {
             Keys.sourceUri: uri,
             Keys.fileName: fileName,
         ], context: context)
-    }
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
     internal func fullPath(using: PhotoOrganizer)->String {
