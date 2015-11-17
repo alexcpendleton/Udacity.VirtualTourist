@@ -52,36 +52,19 @@ public class NewAlbumCoordinator {
         }
     }
     
-    public func downloadAndStoreImage(from: String, to: String)->Promise<UIImage> {
-        if from.isEmpty { return Promise<UIImage>(placeholder) }
-        let imageRequest: NSURLRequest = NSURLRequest(URL: NSURL(string: from)!)
-        return NSURLSession.sharedSession().promise(imageRequest).then({ (data:NSData) -> Promise<UIImage> in
-            let image = UIImage(data: data)
-            
-            do {
-                try self.organizer.save(image!, path: to, overwrite: false)
-            } catch _ {
-                // If for some reason we fail to save to the file system
-                // it's not the end of the world, no point in blowing up.
-                // We still have the image
-            }
-            return Promise<UIImage>(image!)
-        })
-    }
-    
-    public func makeAlbum(forLocation: CLLocationCoordinate2D) throws -> Promise<(PhotoAlbumModel, Pin)> {
-        return try make(forLocation).then { (pin:Pin) -> Promise<(PhotoAlbumModel, Pin)> in
+    public func makeAlbum(forLocation: CLLocationCoordinate2D) throws -> Promise<PhotoAlbumModel> {
+        return try make(forLocation).then { (pin:Pin) -> Promise<PhotoAlbumModel> in
             var items = [PhotoAlbumMember]()
             for p in pin.photos {
                 if let photo = p as? PinPhoto {
                     let fullPath = photo.fullPath(self.organizer)
                     let m = PhotoAlbumMember(placeholder: self.placeholder,
-                        fetcher: self.downloadAndStoreImage(photo.sourceUri, to: fullPath))
+                        fetcher: self.organizer.downloadAndStoreImage(photo.sourceUri, to: fullPath))
                     items.append(m)
                 }
             }
-            let model = PhotoAlbumModel(coordinate: forLocation, members: Promise<[PhotoAlbumMember]>(items))
-            return Promise<(PhotoAlbumModel, Pin)>(model, pin)
+            let model = PhotoAlbumModel(pin: pin, members: Promise<[PhotoAlbumMember]>(items))
+            return Promise<PhotoAlbumModel>(model)
         }
     }
 }

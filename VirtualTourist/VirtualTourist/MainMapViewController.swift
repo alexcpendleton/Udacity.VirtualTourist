@@ -14,6 +14,7 @@ import CoreData
 
 public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDropManagerDelegate {
     @IBOutlet weak var map: MKMapView!
+    
     public var startingPoint: CLLocationCoordinate2D?
     
     public var appConfigManager: AppConfigManager!
@@ -52,6 +53,7 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
         
         loadExistingAlbumsAsAnnotations()
     }
+    
     
     public func zoomTo(coordinate:CLLocationCoordinate2D) {
         map.setCenterCoordinate(coordinate, animated: true)
@@ -92,8 +94,8 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
     }
     
     public func pinDropped(annotation: AlbumPointAnnotation) {
-        try! albumCoordinators.new.makeAlbum(annotation.coordinate).then({ (album:PhotoAlbumModel, pinRecord:Pin) -> Promise<PhotoAlbumModel> in
-            annotation.pin = pinRecord
+        try! albumCoordinators.new.makeAlbum(annotation.coordinate).then({ (album:PhotoAlbumModel) -> Promise<PhotoAlbumModel> in
+            annotation.pin = album.pin
             self.presentAlbum(album)
             return Promise<PhotoAlbumModel>(album)
         })

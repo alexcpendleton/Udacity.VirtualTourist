@@ -28,6 +28,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     public var imageFetcher: ExternalImageFetchable!
     public var metaDataFetcher: ImageMetaDataFetcher!
     public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator)!
+    public var organizer = PhotoOrganizer()
     
     public var albumMediator: WorkingAlbumMediator!
     
@@ -48,12 +49,12 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         appConfigManager = AppConfigManager(repo: appConfigRepo)
         placeholderMaker = PlaceholderImageFetcher()
         imageFetcher = PlaceholditFetcher()
+        //AzureSquareFetcher(organizer: organizer)
         metaDataFetcher = ImageMetaDataFetcher(maker: placeholderMaker)
         albumMediator = WorkingAlbumMediator()
             
         if true {
             let placeholder = placeholderMaker.onePlaceholder()
-            let organizer = PhotoOrganizer()
             let n = NewAlbumCoordinator(nsContext: context, flickr: imageFetcher, organizer: organizer, placeholder: placeholder)
             let e = ExistingAlbumCoordinator(nsContext: context, placeholder: placeholder, organizer: organizer)
             albumCoordinators = (n, e)
