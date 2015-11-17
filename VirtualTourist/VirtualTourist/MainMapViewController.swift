@@ -41,10 +41,10 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
         super.viewWillAppear(animated)
         map.removeAnnotations(map.annotations)
         let record = appConfigManager.record
-        if startingPoint == nil {
-            startingPoint = record.coordinate
-            zoomTo(startingPoint!)
-        }
+        
+        startingPoint = record.coordinate
+        zoomTo(startingPoint!)
+        
         let region = MKCoordinateRegionMake(startingPoint!, makeSpan(record))
         map.setRegion(region, animated: true)
         
