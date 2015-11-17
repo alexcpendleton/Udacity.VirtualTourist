@@ -16,6 +16,7 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var albumActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var newCollectionTrigger: UIButton!
     
     var tapRecognizer: UITapGestureRecognizer!
@@ -95,8 +96,18 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
             self.collectionView.reloadData()
             self.collectionView.backgroundColor = self.collectionView.backgroundColor?.colorWithAlphaComponent(1)
             self.albumActivityIndicator.stopAnimating()
+            self.loadMap()
             return Promise<[PhotoAlbumMember]>(body)
         }
+    }
+    
+    func loadMap() {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = model.coordinate
+        map.addAnnotation(annotation)
+        map.setCenterCoordinate(model.coordinate, animated: false)
+        map.setRegion(MKCoordinateRegion(center: model.coordinate, span: MKCoordinateSpanMake(0.3, 0.3)), animated: false)
+        
     }
     
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

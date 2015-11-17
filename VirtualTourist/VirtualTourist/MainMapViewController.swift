@@ -87,8 +87,11 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
     
     public func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let region = mapView.region
+        let coordinate = mapView.centerCoordinate
         appConfigManager.record.longitudeDelta = region.span.longitudeDelta
         appConfigManager.record.latitudeDelta = region.span.latitudeDelta
+        appConfigManager.record.latitude = coordinate.latitude
+        appConfigManager.record.longitude = coordinate.longitude
         appConfigManager.save()
         print(appConfigManager.record)
     }
