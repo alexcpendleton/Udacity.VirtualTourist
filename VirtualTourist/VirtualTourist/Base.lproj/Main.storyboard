@@ -58,8 +58,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bru-hV-A5T">
+                                <rect key="frame" x="0.0" y="64" width="600" height="149"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="149" id="NcR-ol-Rbb"/>
+                                </constraints>
+                            </mapView>
                             <collectionView clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="22Y-R8-hcq">
-                                <rect key="frame" x="0.0" y="148" width="600" height="452"/>
+                                <rect key="frame" x="0.0" y="206" width="600" height="394"/>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="600" id="WFr-dW-RR2"/>
@@ -71,7 +77,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <activityIndicatorView key="backgroundView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="jwF-IH-s90">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="452"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="394"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="color" red="0.12324084289999999" green="0.4578794316" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </activityIndicatorView>
@@ -107,7 +113,10 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="22Y-R8-hcq" secondAttribute="trailing" constant="-20" id="6iE-9b-5dR"/>
-                            <constraint firstItem="22Y-R8-hcq" firstAttribute="top" secondItem="6ZP-AB-vuG" secondAttribute="bottom" constant="84" id="dYq-Fs-szF"/>
+                            <constraint firstItem="bru-hV-A5T" firstAttribute="trailing" secondItem="22Y-R8-hcq" secondAttribute="trailing" id="I8Z-b0-VXO"/>
+                            <constraint firstItem="bru-hV-A5T" firstAttribute="top" secondItem="6ZP-AB-vuG" secondAttribute="bottom" id="YgF-mJ-jBl"/>
+                            <constraint firstItem="22Y-R8-hcq" firstAttribute="top" secondItem="6ZP-AB-vuG" secondAttribute="bottom" constant="142" id="dYq-Fs-szF"/>
+                            <constraint firstItem="bru-hV-A5T" firstAttribute="leading" secondItem="22Y-R8-hcq" secondAttribute="leading" id="qTG-Rd-g3l"/>
                             <constraint firstItem="Qdv-rC-qPE" firstAttribute="top" secondItem="22Y-R8-hcq" secondAttribute="bottom" id="yZe-0d-o5d"/>
                             <constraint firstItem="22Y-R8-hcq" firstAttribute="leading" secondItem="eyH-yh-aSB" secondAttribute="leadingMargin" constant="-20" id="zMi-H7-znq"/>
                         </constraints>
@@ -123,6 +132,7 @@
                         <outlet property="albumActivityIndicator" destination="jwF-IH-s90" id="bmz-cR-pTG"/>
                         <outlet property="collectionView" destination="22Y-R8-hcq" id="qgC-Qd-r97"/>
                         <outlet property="doneButton" destination="qcj-YJ-xSO" id="WaC-vp-2qS"/>
+                        <outlet property="map" destination="bru-hV-A5T" id="omH-87-TXf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uzo-BV-1Ci" userLabel="First Responder" sceneMemberID="firstResponder"/>
