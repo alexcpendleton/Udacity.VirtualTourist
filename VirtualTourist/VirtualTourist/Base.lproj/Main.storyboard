@@ -110,13 +110,28 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dm6-lY-Fcd">
+                                <rect key="frame" x="0.0" y="560" width="600" height="40"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="600" id="DH6-XM-zKK"/>
+                                    <constraint firstAttribute="height" constant="40" id="x90-q7-zA5"/>
+                                </constraints>
+                                <state key="normal" title="New Collection"/>
+                                <connections>
+                                    <action selector="newCollectionOnTouchUpInside:" destination="m1J-LK-POb" eventType="touchUpInside" id="Ckf-iq-7bx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="22Y-R8-hcq" secondAttribute="trailing" constant="-20" id="6iE-9b-5dR"/>
                             <constraint firstItem="bru-hV-A5T" firstAttribute="trailing" secondItem="22Y-R8-hcq" secondAttribute="trailing" id="I8Z-b0-VXO"/>
+                            <constraint firstItem="Qdv-rC-qPE" firstAttribute="top" secondItem="dm6-lY-Fcd" secondAttribute="bottom" id="Lbj-fp-2Ng"/>
                             <constraint firstItem="bru-hV-A5T" firstAttribute="top" secondItem="6ZP-AB-vuG" secondAttribute="bottom" id="YgF-mJ-jBl"/>
                             <constraint firstItem="22Y-R8-hcq" firstAttribute="top" secondItem="6ZP-AB-vuG" secondAttribute="bottom" constant="142" id="dYq-Fs-szF"/>
+                            <constraint firstItem="dm6-lY-Fcd" firstAttribute="leading" secondItem="eyH-yh-aSB" secondAttribute="leadingMargin" constant="-20" id="exT-DE-xzs"/>
                             <constraint firstItem="bru-hV-A5T" firstAttribute="leading" secondItem="22Y-R8-hcq" secondAttribute="leading" id="qTG-Rd-g3l"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dm6-lY-Fcd" secondAttribute="trailing" constant="-20" id="sIj-9H-ixR"/>
                             <constraint firstItem="Qdv-rC-qPE" firstAttribute="top" secondItem="22Y-R8-hcq" secondAttribute="bottom" id="yZe-0d-o5d"/>
                             <constraint firstItem="22Y-R8-hcq" firstAttribute="leading" secondItem="eyH-yh-aSB" secondAttribute="leadingMargin" constant="-20" id="zMi-H7-znq"/>
                         </constraints>
@@ -133,6 +148,7 @@
                         <outlet property="collectionView" destination="22Y-R8-hcq" id="qgC-Qd-r97"/>
                         <outlet property="doneButton" destination="qcj-YJ-xSO" id="WaC-vp-2qS"/>
                         <outlet property="map" destination="bru-hV-A5T" id="omH-87-TXf"/>
+                        <outlet property="newCollectionTrigger" destination="dm6-lY-Fcd" id="A8w-Rh-75E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uzo-BV-1Ci" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -38,9 +38,10 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
         let coordinator = AppDelegate.sharedInstance().albumCoordinators.new
         try! coordinator.makeAlbum(coordinate).then { (body:PhotoAlbumModel) -> Promise<PhotoAlbumModel> in
             self.mediator.album = body
-            dispatch_async(dispatch_get_main_queue(), {
-                self.collectionView.reloadData()
-            })
+            self.model = self.mediator.album
+            self.loadAlbum()
+            self.collectionView.reloadData()
+            //self.collectionView.reloadItemsAtIndexPaths(self.collectionView.indexPathsForVisibleItems())
             return Promise<PhotoAlbumModel>(body)
         }
     }
@@ -100,6 +101,7 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
             return Promise<[PhotoAlbumMember]>(body)
         }
     }
+    
     
     func loadMap() {
         let annotation = MKPointAnnotation()
