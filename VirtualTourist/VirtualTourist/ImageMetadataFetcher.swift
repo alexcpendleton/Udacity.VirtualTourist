@@ -21,19 +21,19 @@ public class ImageMetaDataFetcher {
         placeholderMaker = maker
     }
     
-    func delayedImageFetcher() -> Promise<UIImage> {
-        return Promise<UIImage> { fulfill, reject in
+    func delayedImageFetcher() -> Promise<UIImage?> {
+        return Promise<UIImage?> { fulfill, reject in
             imageDelay.delay {
                 fulfill(self.afterLoad())
             }
         }
     }
     
-    func afterLoad() -> UIImage {
+    func afterLoad() -> UIImage? {
         return placeholderMaker.onePlaceholder(UIColor.greenColor())
     }
     
-    func beforeLoad() -> UIImage {
+    func beforeLoad() -> UIImage? {
         return placeholderMaker.onePlaceholder(UIColor.redColor())
     }
     
@@ -42,7 +42,7 @@ public class ImageMetaDataFetcher {
             albumDelay.delay {
                 var result = [PhotoAlbumMember]()
                 for _ in 1...25 {
-                    let n = PhotoAlbumMember(placeholder:self.beforeLoad(), fetcher: self.delayedImageFetcher())
+                    let n = PhotoAlbumMember(placeholder:self.beforeLoad()!, fetcher: self.delayedImageFetcher())
                     result.append(n)
                 }
                 fulfill(result)

@@ -10,17 +10,17 @@ import Foundation
 import PromiseKit
 
 public class PhotoAlbumMember {
-    init(placeholder: UIImage, fetcher:Promise<UIImage>) {
+    init(placeholder: UIImage, fetcher:Promise<UIImage?>) {
         self.fetcher = fetcher
         self.placeholder = placeholder
     }
     
     public var image: UIImage?
     public var placeholder: UIImage
-    public var fetcher: Promise<UIImage>
+    public var fetcher: Promise<UIImage?>
     
     public func fetch() -> Promise<PhotoAlbumMember> {
-        return when(fetcher).then { (fetchedImage: [UIImage]) -> Promise<PhotoAlbumMember> in
+        return when(fetcher).then { (fetchedImage: [UIImage?]) -> Promise<PhotoAlbumMember> in
             self.image = fetchedImage.first!
             return Promise<PhotoAlbumMember>(self)
         }

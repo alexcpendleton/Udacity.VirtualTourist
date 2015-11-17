@@ -11,10 +11,13 @@ import MapKit
 import PromiseKit
 
 public class PhotoAlbumModel {
-    init(coordinate: CLLocationCoordinate2D, members: Promise<[PhotoAlbumMember]>) {
-        self.coordinate = coordinate
+    init(pin: Pin, members: Promise<[PhotoAlbumMember]>) {
+        self.pin = pin
         self.members = members
     }
+    public var pin: Pin
     public var members: Promise<[PhotoAlbumMember]>
-    public var coordinate: CLLocationCoordinate2D
+    public var coordinate: CLLocationCoordinate2D {
+        get { return pin.coordinate }
+    }
 }

@@ -9,6 +9,7 @@
 import Foundation
 import FileKit
 import UIKit
+import PromiseKit
 
 public class PhotoOrganizer {
     
@@ -50,6 +51,23 @@ public class PhotoOrganizer {
     func documentsDirectory() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         return paths[0]
+    }
+    
+    public func downloadAndStoreImage(from: String, to: String)->Promise<UIImage?> {
+        if from.isEmpty { return Promise<UIImage?>(nil) }
+        let imageRequest: NSURLRequest = NSURLRequest(URL: NSURL(string: from)!)
+        return NSURLSession.sharedSession().promise(imageRequest).then({ (data:NSData) -> Promise<UIImage?> in
+            let image = UIImage(data: data)
+            
+            do {
+                try self.save(image!, path: to, overwrite: false)
+            } catch _ {
+                // If for some reason we fail to save to the file system
+                // it's not the end of the world, no point in blowing up.
+                // We still have the image
+            }
+            return Promise<UIImage?>(image)
+        })
     }
     
     

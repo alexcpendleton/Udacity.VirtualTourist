@@ -16,11 +16,33 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var albumActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var newCollectionTrigger: UIButton!
+    
     var tapRecognizer: UITapGestureRecognizer!
     
     public var model: PhotoAlbumModel!
     private var dataSource:[PhotoAlbumMember]?
     public var useTestingData = true
+    lazy public var mediator = { AppDelegate.sharedInstance().albumMediator }()
+
+    
+    @IBAction func newCollectionOnTouchUpInside(sender:AnyObject?) {
+        // Store the coordinate for later
+        let coordinate = model.pin.coordinate
+        // Trash the old pin, it's of no use to us anymore
+        let app = AppDelegate.sharedInstance()
+        app.stackManager.managedObjectContext.deleteObject(model.pin)
+        
+        // Fetch a new album
+        let coordinator = AppDelegate.sharedInstance().albumCoordinators.new
+        try! coordinator.makeAlbum(coordinate).then { (body:PhotoAlbumModel) -> Promise<PhotoAlbumModel> in
+            self.mediator.album = body
+            dispatch_async(dispatch_get_main_queue(), {
+                self.collectionView.reloadData()
+            })
+            return Promise<PhotoAlbumModel>(body)
+        }
+    }
     
     @IBAction func doneOnTouchUpInside(sender: AnyObject?) {
         close()
@@ -33,7 +55,7 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
     public override func viewDidLoad() {
         super.viewDidLoad()
         if model == nil {
-            model = AppDelegate.sharedInstance().albumMediator.album!
+            model = mediator.album
         }
     }
     
