@@ -54,12 +54,12 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         albumMediator = WorkingAlbumMediator()
         albumDestroyer = AlbumDestroyer(context: context, organizer: organizer)
             
-        if true {
-            let placeholder = placeholderMaker.onePlaceholder()
-            let n = NewAlbumCoordinator(nsContext: context, flickr: imageFetcher, organizer: organizer, placeholder: placeholder)
-            let e = ExistingAlbumCoordinator(nsContext: context, placeholder: placeholder, organizer: organizer)
-            albumCoordinators = (n, e)
-        }
+
+        let placeholder = placeholderMaker.onePlaceholder()
+        let n = NewAlbumCoordinator(nsContext: context, flickr: imageFetcher, organizer: organizer, placeholder: placeholder)
+        let e = ExistingAlbumCoordinator(nsContext: context, placeholder: placeholder, organizer: organizer)
+        albumCoordinators = (n, e)
+        
         
         AppDelegate._sharedInstance = self
         // Override point for customization after application launch.
