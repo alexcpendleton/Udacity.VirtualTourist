@@ -18,6 +18,7 @@ public class PhotoAlbumMember {
     public var image: UIImage?
     public var placeholder: UIImage
     public var fetcher: Promise<UIImage?>
+    public var isSelected: Bool = false
     
     public func fetch() -> Promise<PhotoAlbumMember> {
         return when(fetcher).then { (fetchedImage: [UIImage?]) -> Promise<PhotoAlbumMember> in

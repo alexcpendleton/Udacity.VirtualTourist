@@ -5,6 +5,7 @@
 //  Created by Alex Pendleton on 10/29/15.
 //  Copyright © 2015 Alex Pendleton. All rights reserved.
 //
+// Icons from https://icons8.com/
 
 import UIKit
 import CoreData

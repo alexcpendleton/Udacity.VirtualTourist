@@ -123,15 +123,32 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
         } else {
             cell.photo.image = item.image
         }
+        cell.setSelection(item.isSelected)
         return cell
     }
     
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        updateCellSelection(collectionView, indexPath: indexPath, selectionStatus: true)
+    }
+    
+    public func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        updateCellSelection(collectionView, indexPath: indexPath, selectionStatus: false)
+    }
+    
+    func updateCellSelection(collectionView: UICollectionView, indexPath: NSIndexPath, selectionStatus: Bool) {
         let cell = collectionView.cellForItemAtIndexPath(indexPath) as! PhotoAlbumCollectionViewCell
-        print("Cell selected", cell)
+        let item = dataSource![indexPath.row]
+        item.isSelected = selectionStatus
+        cell.setSelection(selectionStatus)
     }
 }
 
 public class PhotoAlbumCollectionViewCell : UICollectionViewCell {
     @IBOutlet public weak var photo: UIImageView!
+    @IBOutlet public weak var selectionIndicator: UIImageView!
+    
+    public func setSelection(shouldBeSelected: Bool) {
+        selectionIndicator.hidden = !shouldBeSelected
+    }
 }
+
