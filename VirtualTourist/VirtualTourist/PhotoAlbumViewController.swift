@@ -17,7 +17,7 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
     @IBOutlet weak var albumActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var map: MKMapView!
-    @IBOutlet weak var newCollectionTrigger: UIButton!
+    @IBOutlet weak var deleteButton: UIBarButtonItem!
     
     var tapRecognizer: UITapGestureRecognizer!
     
@@ -34,7 +34,7 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
         // Store the coordinate for later
         let coordinate = model.pin.coordinate
         // Trash the old pin, it's of no use to us anymore
-        albumDestroyer.destroy(model)
+        try? albumDestroyer.destroy(model)
         model = nil
         // Fetch a new album
         let coordinator = albumCoordinators.new
@@ -43,7 +43,6 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
             self.model = self.mediator.album
             self.loadAlbum()
             self.collectionView.reloadData()
-            //self.collectionView.reloadItemsAtIndexPaths(self.collectionView.indexPathsForVisibleItems())
             return Promise<PhotoAlbumModel>(body)
         }
     }
@@ -52,8 +51,21 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
         close()
     }
     
+    @IBAction func deleteSelectedTouchUpInside(sender:AnyObject?) {
+        deleteSelected()
+    }
+    
     public func close() {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    public func deleteSelected() {
+        let deleteable = dataSource!.filter{$0.isSelected && $0.associate != nil}
+        for item in deleteable {
+            try? albumDestroyer.destroy(item.associate!)
+        }
+        dataSource = dataSource!.filter{!$0.isSelected}
+        collectionView.reloadData()
     }
     
     public override func viewDidLoad() {
@@ -140,6 +152,8 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
         let item = dataSource![indexPath.row]
         item.isSelected = selectionStatus
         cell.setSelection(selectionStatus)
+        
+        deleteButton.enabled = dataSource!.filter{$0.isSelected}.count > 0
     }
 }
 

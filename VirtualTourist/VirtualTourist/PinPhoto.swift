@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 @objc(PinPhoto)
-class PinPhoto : NSManagedObject {
+public class PinPhoto : NSManagedObject {
     struct Keys {
         static let sourceUri = "sourceUri"
         static let fileName = "fileName"

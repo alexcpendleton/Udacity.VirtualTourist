@@ -59,7 +59,7 @@ public class NewAlbumCoordinator {
                 if let photo = p as? PinPhoto {
                     let fullPath = photo.fullPath(self.organizer)
                     let m = PhotoAlbumMember(placeholder: self.placeholder,
-                        fetcher: self.organizer.downloadAndStoreImage(photo.sourceUri, to: fullPath))
+                        fetcher: self.organizer.downloadAndStoreImage(photo.sourceUri, to: fullPath), associate: photo)
                     items.append(m)
                 }
             }

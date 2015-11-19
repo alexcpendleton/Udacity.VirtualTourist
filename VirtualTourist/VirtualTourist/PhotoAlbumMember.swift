@@ -10,15 +10,17 @@ import Foundation
 import PromiseKit
 
 public class PhotoAlbumMember {
-    init(placeholder: UIImage, fetcher:Promise<UIImage?>) {
+    init(placeholder: UIImage, fetcher:Promise<UIImage?>, associate: PinPhoto?) {
         self.fetcher = fetcher
         self.placeholder = placeholder
+        self.associate = associate
     }
     
     public var image: UIImage?
     public var placeholder: UIImage
     public var fetcher: Promise<UIImage?>
     public var isSelected: Bool = false
+    public var associate: PinPhoto?
     
     public func fetch() -> Promise<PhotoAlbumMember> {
         return when(fetcher).then { (fetchedImage: [UIImage?]) -> Promise<PhotoAlbumMember> in

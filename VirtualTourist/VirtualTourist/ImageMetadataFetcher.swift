@@ -42,7 +42,7 @@ public class ImageMetaDataFetcher {
             albumDelay.delay {
                 var result = [PhotoAlbumMember]()
                 for _ in 1...25 {
-                    let n = PhotoAlbumMember(placeholder:self.beforeLoad()!, fetcher: self.delayedImageFetcher())
+                    let n = PhotoAlbumMember(placeholder:self.beforeLoad()!, fetcher: self.delayedImageFetcher(), associate: nil)
                     result.append(n)
                 }
                 fulfill(result)

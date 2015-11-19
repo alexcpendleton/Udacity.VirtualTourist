@@ -44,7 +44,7 @@ public class ExistingAlbumCoordinator {
         let iterable = source.photos // source.valueForKey("photos") as! NSSet
         for p in iterable {
             if let photo = p as? PinPhoto {
-                let m = PhotoAlbumMember(placeholder: self.placeholder, fetcher: self.readImageFromFileSystemOrDownloadAndStore(photo))
+                let m = PhotoAlbumMember(placeholder: self.placeholder, fetcher: self.readImageFromFileSystemOrDownloadAndStore(photo), associate: photo)
                 items.append(m)
             }
         }

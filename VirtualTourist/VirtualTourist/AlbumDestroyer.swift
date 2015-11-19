@@ -18,10 +18,10 @@ public class AlbumDestroyer {
         self.organizer = o
     }
     
-    public func destroy(toDestroy: PhotoAlbumModel) {
-        destroy(toDestroy.pin)
+    public func destroy(toDestroy: PhotoAlbumModel) throws {
+        try destroy(toDestroy.pin)
     }
-    public func destroy(pin: Pin) {
+    public func destroy(pin: Pin) throws {
         // Delete all of the photos from the file system
         // This could be done asynchronously as not to lock 
         // up the main thread, even if it only takes a moment
@@ -42,5 +42,21 @@ public class AlbumDestroyer {
         // Deleting the Pin should cascade deletions of all the PinPhotos
         // Needs to happen on the main thread
         context.deleteObject(pin)
+        try context.save()
+    }
+    public func destroyFile(forPhoto: PinPhoto) {
+        organizer.delete(organizer.path(forPhoto.fileName))
+    }
+    
+    public func destroy(photos: [PinPhoto]) throws {
+        for i in photos {
+            destroyFile(i)
+            context.deleteObject(i)
+        }
+        try context.save()
+    }
+    
+    public func destroy(photo: PinPhoto) throws {
+        try destroy([photo])
     }
 }

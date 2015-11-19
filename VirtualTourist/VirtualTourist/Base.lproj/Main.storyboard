@@ -58,14 +58,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bru-hV-A5T">
-                                <rect key="frame" x="0.0" y="64" width="600" height="149"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="149" id="NcR-ol-Rbb"/>
-                                </constraints>
-                            </mapView>
                             <collectionView clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="22Y-R8-hcq">
-                                <rect key="frame" x="0.0" y="206" width="600" height="394"/>
+                                <rect key="frame" x="0.0" y="206" width="600" height="350"/>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="600" id="WFr-dW-RR2"/>
@@ -77,7 +71,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <activityIndicatorView key="backgroundView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="jwF-IH-s90">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="394"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="color" red="0.12324084289999999" green="0.4578794316" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </activityIndicatorView>
@@ -97,7 +91,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CheckFilled" translatesAutoresizingMaskIntoConstraints="NO" id="cDC-uO-Pr8">
-                                                    <rect key="frame" x="68" y="68" width="20" height="20"/>
+                                                    <rect key="frame" x="70" y="70" width="16" height="16"/>
                                                     <color key="tintColor" red="0.12324084289999999" green="0.4578794316" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
                                             </subviews>
@@ -119,29 +113,42 @@
                                     <outlet property="delegate" destination="m1J-LK-POb" id="3eq-rD-zxP"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dm6-lY-Fcd">
-                                <rect key="frame" x="0.0" y="560" width="600" height="40"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bru-hV-A5T">
+                                <rect key="frame" x="0.0" y="64" width="600" height="149"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="600" id="DH6-XM-zKK"/>
-                                    <constraint firstAttribute="height" constant="40" id="x90-q7-zA5"/>
+                                    <constraint firstAttribute="height" constant="149" id="NcR-ol-Rbb"/>
                                 </constraints>
-                                <state key="normal" title="New Collection"/>
-                                <connections>
-                                    <action selector="newCollectionOnTouchUpInside:" destination="m1J-LK-POb" eventType="touchUpInside" id="Ckf-iq-7bx"/>
-                                </connections>
-                            </button>
+                            </mapView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Oz-w0-iXh">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="0pl-jQ-5hg"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem systemItem="refresh" id="L6V-W7-vuw">
+                                        <connections>
+                                            <action selector="newCollectionOnTouchUpInside:" destination="m1J-LK-POb" id="elh-jB-7pQ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="XUn-2O-F9i"/>
+                                    <barButtonItem enabled="NO" systemItem="trash" id="Xuy-S3-FeL">
+                                        <connections>
+                                            <action selector="deleteSelectedTouchUpInside:" destination="m1J-LK-POb" id="QIw-yt-EJC"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="22Y-R8-hcq" secondAttribute="trailing" constant="-20" id="6iE-9b-5dR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6Oz-w0-iXh" secondAttribute="trailing" constant="-20" id="GmZ-Iq-DHO"/>
                             <constraint firstItem="bru-hV-A5T" firstAttribute="trailing" secondItem="22Y-R8-hcq" secondAttribute="trailing" id="I8Z-b0-VXO"/>
-                            <constraint firstItem="Qdv-rC-qPE" firstAttribute="top" secondItem="dm6-lY-Fcd" secondAttribute="bottom" id="Lbj-fp-2Ng"/>
                             <constraint firstItem="bru-hV-A5T" firstAttribute="top" secondItem="6ZP-AB-vuG" secondAttribute="bottom" id="YgF-mJ-jBl"/>
+                            <constraint firstItem="6Oz-w0-iXh" firstAttribute="leading" secondItem="eyH-yh-aSB" secondAttribute="leadingMargin" constant="-20" id="Zoc-7d-8Xq"/>
                             <constraint firstItem="22Y-R8-hcq" firstAttribute="top" secondItem="6ZP-AB-vuG" secondAttribute="bottom" constant="142" id="dYq-Fs-szF"/>
-                            <constraint firstItem="dm6-lY-Fcd" firstAttribute="leading" secondItem="eyH-yh-aSB" secondAttribute="leadingMargin" constant="-20" id="exT-DE-xzs"/>
+                            <constraint firstItem="6Oz-w0-iXh" firstAttribute="top" secondItem="22Y-R8-hcq" secondAttribute="bottom" id="f8Z-QK-1An"/>
+                            <constraint firstItem="Qdv-rC-qPE" firstAttribute="top" secondItem="6Oz-w0-iXh" secondAttribute="bottom" id="ocI-FJ-DBn"/>
                             <constraint firstItem="bru-hV-A5T" firstAttribute="leading" secondItem="22Y-R8-hcq" secondAttribute="leading" id="qTG-Rd-g3l"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="dm6-lY-Fcd" secondAttribute="trailing" constant="-20" id="sIj-9H-ixR"/>
-                            <constraint firstItem="Qdv-rC-qPE" firstAttribute="top" secondItem="22Y-R8-hcq" secondAttribute="bottom" id="yZe-0d-o5d"/>
                             <constraint firstItem="22Y-R8-hcq" firstAttribute="leading" secondItem="eyH-yh-aSB" secondAttribute="leadingMargin" constant="-20" id="zMi-H7-znq"/>
                         </constraints>
                     </view>
@@ -155,9 +162,9 @@
                     <connections>
                         <outlet property="albumActivityIndicator" destination="jwF-IH-s90" id="bmz-cR-pTG"/>
                         <outlet property="collectionView" destination="22Y-R8-hcq" id="qgC-Qd-r97"/>
+                        <outlet property="deleteButton" destination="Xuy-S3-FeL" id="PnL-Tm-v6O"/>
                         <outlet property="doneButton" destination="qcj-YJ-xSO" id="WaC-vp-2qS"/>
                         <outlet property="map" destination="bru-hV-A5T" id="omH-87-TXf"/>
-                        <outlet property="newCollectionTrigger" destination="dm6-lY-Fcd" id="A8w-Rh-75E"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uzo-BV-1Ci" userLabel="First Responder" sceneMemberID="firstResponder"/>
