@@ -70,5 +70,9 @@ public class PhotoOrganizer {
         })
     }
     
+    public func delete(fullPath: String) {
+        try? FKPath(fullPath).deleteFile()
+    }
+    
     
 }

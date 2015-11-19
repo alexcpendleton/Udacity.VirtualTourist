@@ -24,18 +24,20 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
     public var model: PhotoAlbumModel!
     private var dataSource:[PhotoAlbumMember]?
     public var useTestingData = true
-    lazy public var mediator = { AppDelegate.sharedInstance().albumMediator }()
-
+    
+    lazy public var app =  { return AppDelegate.sharedInstance() }()
+    public var mediator: WorkingAlbumMediator { get { return app.albumMediator } }
+    public var albumDestroyer: AlbumDestroyer  { get { return app.albumDestroyer } }
+    public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator) { get { return app.albumCoordinators } }
     
     @IBAction func newCollectionOnTouchUpInside(sender:AnyObject?) {
         // Store the coordinate for later
         let coordinate = model.pin.coordinate
         // Trash the old pin, it's of no use to us anymore
-        let app = AppDelegate.sharedInstance()
-        app.stackManager.managedObjectContext.deleteObject(model.pin)
-        
+        albumDestroyer.destroy(model)
+        model = nil
         // Fetch a new album
-        let coordinator = AppDelegate.sharedInstance().albumCoordinators.new
+        let coordinator = albumCoordinators.new
         try! coordinator.makeAlbum(coordinate).then { (body:PhotoAlbumModel) -> Promise<PhotoAlbumModel> in
             self.mediator.album = body
             self.model = self.mediator.album

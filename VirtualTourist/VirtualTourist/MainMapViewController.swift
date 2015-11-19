@@ -15,26 +15,19 @@ import CoreData
 public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDropManagerDelegate {
     @IBOutlet weak var map: MKMapView!
     
-    public var startingPoint: CLLocationCoordinate2D?
+    public lazy var app = { return AppDelegate.sharedInstance() }()
+    public var context: NSManagedObjectContext { get { return app.stackManager.managedObjectContext } }
+    public var appConfigManager: AppConfigManager { get { return app.appConfigManager } }
+    public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator) { get { return app.albumCoordinators } }
+    public var albumMediator: WorkingAlbumMediator { get { return app.albumMediator } }
     
-    public var appConfigManager: AppConfigManager!
+    public var startingPoint: CLLocationCoordinate2D?
     public var pinDropManager: PinDropManager!
-    public var metadataFetcher: ImageMetaDataFetcher!
-    public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator)!
-    public var albumMediator: WorkingAlbumMediator!
-    public var context: NSManagedObjectContext!
     
     var loadedPins = [Pin]()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let app = AppDelegate.sharedInstance()
-        appConfigManager = app.appConfigManager
-        metadataFetcher = app.metaDataFetcher
-        albumCoordinators = app.albumCoordinators
-        albumMediator = app.albumMediator
-        context = app.stackManager.managedObjectContext
     }
     
     public override func viewWillAppear(animated: Bool) {

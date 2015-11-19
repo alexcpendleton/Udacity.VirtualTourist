@@ -29,6 +29,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     public var metaDataFetcher: ImageMetaDataFetcher!
     public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator)!
     public var organizer = PhotoOrganizer()
+    public var albumDestroyer: AlbumDestroyer!
     
     public var albumMediator: WorkingAlbumMediator!
     
@@ -49,9 +50,9 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         appConfigManager = AppConfigManager(repo: appConfigRepo)
         placeholderMaker = PlaceholderImageFetcher()
         imageFetcher = PlaceholditFetcher()
-        //AzureSquareFetcher(organizer: organizer)
         metaDataFetcher = ImageMetaDataFetcher(maker: placeholderMaker)
         albumMediator = WorkingAlbumMediator()
+        albumDestroyer = AlbumDestroyer(context: context, organizer: organizer)
             
         if true {
             let placeholder = placeholderMaker.onePlaceholder()
