@@ -57,6 +57,8 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
     }
     
     public override func viewDidLoad() {
+        collectionView.allowsSelection = true
+        collectionView.allowsMultipleSelection = true
         super.viewDidLoad()
         if model == nil {
             model = mediator.album
@@ -64,14 +66,7 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
     }
     
     public override func viewWillAppear(animated: Bool) {
-        tapRecognizer = UITapGestureRecognizer(target: self, action: "onSingleTap:")
-        self.view.addGestureRecognizer(tapRecognizer)
-        
-        self.view.backgroundColor = self.view.backgroundColor?.colorWithAlphaComponent(0.75)
-        
         super.viewWillAppear(animated)
-        collectionView.delegate = self
-        collectionView.dataSource = self
         
         loadAlbum()
     }
@@ -129,6 +124,11 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
             cell.photo.image = item.image
         }
         return cell
+    }
+    
+    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! PhotoAlbumCollectionViewCell
+        print("Cell selected", cell)
     }
 }
 

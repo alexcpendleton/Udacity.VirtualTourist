@@ -109,6 +109,10 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="m1J-LK-POb" id="vsG-ls-bnS"/>
+                                    <outlet property="delegate" destination="m1J-LK-POb" id="3eq-rD-zxP"/>
+                                </connections>
                             </collectionView>
                             <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dm6-lY-Fcd">
                                 <rect key="frame" x="0.0" y="560" width="600" height="40"/>
