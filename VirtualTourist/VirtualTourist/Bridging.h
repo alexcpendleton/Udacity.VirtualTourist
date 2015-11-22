@@ -10,6 +10,6 @@
 #define Bridging_h
 
 #import "DRImagePlaceholderHelper/DRImagePlaceholderHelper.h"
-
+#import "FlickrKit/FlickrKit.h"
 
 #endif /* Bridging_h */

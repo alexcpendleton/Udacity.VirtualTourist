@@ -27,7 +27,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     
     public var placeholderMaker: PlaceholderImageFetcher!
     public var imageFetcher: ExternalImageFetchable!
-    public var metaDataFetcher: ImageMetaDataFetcher!
     public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator)!
     public var organizer = PhotoOrganizer()
     public var albumDestroyer: AlbumDestroyer!
@@ -50,8 +49,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appConfigManager = AppConfigManager(repo: appConfigRepo)
         placeholderMaker = PlaceholderImageFetcher()
-        imageFetcher = PlaceholditFetcher()
-        metaDataFetcher = ImageMetaDataFetcher(maker: placeholderMaker)
+        imageFetcher = FlickrImageFetcher()
         albumMediator = WorkingAlbumMediator()
         albumDestroyer = AlbumDestroyer(context: context, organizer: organizer)
             
