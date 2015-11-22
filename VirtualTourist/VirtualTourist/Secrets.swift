@@ -9,6 +9,19 @@
 import Foundation
 
 public class Secrets {
-    public let FlickrApiKey = ""
-    public let FlickrApiSecret = ""
+    init(key:String, secret:String) {
+        FlickrApiKey = key
+        FlickrApiSecret = secret
+    }
+    public var FlickrApiKey = ""
+    public var FlickrApiSecret = ""
+    
+    init(fromPlistAtPath: String) {
+        if let loaded = NSDictionary(contentsOfFile: fromPlistAtPath) as? [String:AnyObject] {
+            FlickrApiKey = loaded["FlickrApiKey"] as! String
+            FlickrApiSecret = loaded["FlickrApiSecret"] as! String
+        } else {
+            print("INSTRUCTOR: Be sure you set your API key in AppDelegate or put it into a plist file. Mine is in a Secrets.plist file which I don't keep in git.")
+        }
+    }
 }

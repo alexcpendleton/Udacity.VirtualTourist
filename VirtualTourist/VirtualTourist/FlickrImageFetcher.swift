@@ -10,11 +10,19 @@ import Foundation
 import UIKit
 import PromiseKit
 import MapKit
-import FlickrKit
 
 public class FlickrImageFetcher : ExternalImageFetchable {
+    let secrets: Secrets
+    init(secrets:Secrets) {
+        self.secrets = secrets
+    }
+    
     public func images(forLocation: CLLocationCoordinate2D, atMost: Int) -> Promise<[String]> {
-        return Promise<[String]>(["not implemented yet"])
+        return Promise<[String]>([""])
+    }
+    
+    func getUriList(fromResponse: [NSObject : AnyObject]) -> [String] {
+        return ["whoops"]
     }
     
     func createBoundingBoxString(location: CLLocationCoordinate2D) -> String {

@@ -33,6 +33,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     
     public var albumMediator: WorkingAlbumMediator!
     
+    private var secrets: Secrets!
+    
     /** Gets the shared instance Singleton for the app's various configuration
      members and methods */
     public static func sharedInstance() -> AppDelegate {
@@ -40,8 +42,11 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     public func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        stackManager = CoreDataStackManager()
+        let secretPath = NSBundle.mainBundle().pathForResource("Secrets", ofType: "plist")
+        secrets = Secrets(fromPlistAtPath: secretPath!)
+        //secrets = Secrets(key: "your_api_key", secret: "your_api_secret")
         
+        stackManager = CoreDataStackManager()
         let context = stackManager.managedObjectContext
         appConfigRepo = NsmAppConfigurationRepository(context: context)
         dataFiller = InitialDataFiller(context: context, factory: NsmAppConfigurationFactory(context: context), repository: appConfigRepo)
@@ -49,7 +54,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appConfigManager = AppConfigManager(repo: appConfigRepo)
         placeholderMaker = PlaceholderImageFetcher()
-        imageFetcher = FlickrImageFetcher()
+        imageFetcher = FlickrImageFetcher(secrets: secrets)
         albumMediator = WorkingAlbumMediator()
         albumDestroyer = AlbumDestroyer(context: context, organizer: organizer)
             
@@ -58,7 +63,6 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         let n = NewAlbumCoordinator(nsContext: context, flickr: imageFetcher, organizer: organizer, placeholder: placeholder)
         let e = ExistingAlbumCoordinator(nsContext: context, placeholder: placeholder, organizer: organizer)
         albumCoordinators = (n, e)
-        
         
         AppDelegate._sharedInstance = self
         // Override point for customization after application launch.
