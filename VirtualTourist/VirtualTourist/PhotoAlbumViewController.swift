@@ -29,16 +29,16 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
     public var mediator: WorkingAlbumMediator { get { return app.albumMediator } }
     public var albumDestroyer: AlbumDestroyer  { get { return app.albumDestroyer } }
     public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator) { get { return app.albumCoordinators } }
+    public var perPage: Int { get { return app.pageSize } }
     
     @IBAction func newCollectionOnTouchUpInside(sender:AnyObject?) {
         // Store the coordinate for later
         let coordinate = model.pin.coordinate
-        // Trash the old pin, it's of no use to us anymore
-        try? albumDestroyer.destroy(model)
-        model = nil
-        // Fetch a new album
+        try? albumDestroyer.destroy(model.pin.photos.map { $0 as! PinPhoto })
+        // Fetch the next page of images
         let coordinator = albumCoordinators.new
-        try! coordinator.makeAlbum(coordinate).then { (body:PhotoAlbumModel) -> Promise<PhotoAlbumModel> in
+        let nextPage = model.pin.nextPageIndex.integerValue
+        try! coordinator.makeAlbum(coordinate, pageIndex: nextPage, perPage: perPage, pinRecord: model.pin).then { (body:PhotoAlbumModel) -> Promise<PhotoAlbumModel> in
             self.mediator.album = body
             self.model = self.mediator.album
             self.loadAlbum()

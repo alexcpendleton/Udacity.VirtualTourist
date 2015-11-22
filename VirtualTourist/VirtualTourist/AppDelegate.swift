@@ -35,6 +35,8 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private var secrets: Secrets!
     
+    public var pageSize = 30
+    
     /** Gets the shared instance Singleton for the app's various configuration
      members and methods */
     public static func sharedInstance() -> AppDelegate {

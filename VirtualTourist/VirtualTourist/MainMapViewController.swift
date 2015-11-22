@@ -20,6 +20,7 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
     public var appConfigManager: AppConfigManager { get { return app.appConfigManager } }
     public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator) { get { return app.albumCoordinators } }
     public var albumMediator: WorkingAlbumMediator { get { return app.albumMediator } }
+    public var perPage: Int { get { return app.pageSize } }
     
     public var startingPoint: CLLocationCoordinate2D?
     public var pinDropManager: PinDropManager!
@@ -90,7 +91,7 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
     }
     
     public func pinDropped(annotation: AlbumPointAnnotation) {
-        try! albumCoordinators.new.makeAlbum(annotation.coordinate).then({ (album:PhotoAlbumModel) -> Promise<PhotoAlbumModel> in
+        try! albumCoordinators.new.makeAlbum(annotation.coordinate, pageIndex: 1, perPage: perPage).then({ (album:PhotoAlbumModel) -> Promise<PhotoAlbumModel> in
             annotation.pin = album.pin
             self.presentAlbum(album)
             return Promise<PhotoAlbumModel>(album)

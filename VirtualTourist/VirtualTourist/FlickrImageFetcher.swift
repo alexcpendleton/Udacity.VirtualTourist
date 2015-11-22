@@ -16,20 +16,18 @@ public class FlickrImageFetcher : ExternalImageFetchable {
     init(secrets:Secrets) {
         self.secrets = secrets
     }
-    
-    public func images(forLocation: CLLocationCoordinate2D, atMost: Int) -> Promise<[String]> {
+    public func images(forLocation: CLLocationCoordinate2D, pageIndex: Int, perPage: Int) -> Promise<FetchedImageDatum> {
         let methodArguments = [
             "method": METHOD_NAME,
             "api_key": secrets.FlickrApiKey,
             "extras": EXTRAS,
             "format": DATA_FORMAT,
             "nojsoncallback": NO_JSON_CALLBACK,
-            "per_page": atMost.description,
-            "page": "1" /* This will have to change, probably */
-            ,
+            "per_page": perPage.description,
+            "page": pageIndex.description,
             "bbox": createBoundingBoxString(forLocation)
         ]
-        return getMetaDataFromFlickr(methodArguments).then { (content:[String:AnyObject]) -> Promise<[String]> in
+        return getMetaDataFromFlickr(methodArguments).then { (content:[String:AnyObject]) -> Promise<FetchedImageDatum> in
 /*
 /*
 { "photos": { "page": 1, "pages": "3347", "perpage": 100, "total": "334602",
@@ -42,9 +40,21 @@ public class FlickrImageFetcher : ExternalImageFetchable {
             print("******End response from flickr.")
          
             let container = content["photos"] as! [String:AnyObject]
+            
+            let photoTotal = (container["total"] as! NSString).integerValue
+            let currentPage = container["page"] as! Int
+            let pagesTotal = (container["pages"] as! Int)
+            
             let photoArray = container["photo"] as! [[String:AnyObject]]
             let uris: [String] = photoArray.map { $0[self.ImageSizeKey] as! String }
-            return Promise<[String]>(uris)
+            
+            var next = currentPage + 1
+            if next > pagesTotal {
+                next = 1
+            }
+            
+            let results = FetchedImageDatum(nextPage: next, uris: uris)
+            return Promise<FetchedImageDatum>(results)
             
         }
     }

@@ -9,6 +9,7 @@
     <entity name="Pin" representedClassName="Pin" syncable="YES">
         <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="nextPageIndex" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PinPhoto" inverseName="pin" inverseEntity="PinPhoto" syncable="YES"/>
     </entity>
     <entity name="PinPhoto" representedClassName="PinPhoto" syncable="YES">
@@ -18,7 +19,7 @@
     </entity>
     <elements>
         <element name="AppConfiguration" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="Pin" positionX="-54" positionY="9" width="128" height="90"/>
+        <element name="Pin" positionX="-54" positionY="9" width="128" height="105"/>
         <element name="PinPhoto" positionX="-36" positionY="45" width="128" height="90"/>
     </elements>
 </model>

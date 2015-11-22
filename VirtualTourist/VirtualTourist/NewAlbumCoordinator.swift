@@ -26,15 +26,20 @@ public class NewAlbumCoordinator {
     }
     public var maxAlbumSize = 30
     
-    public func make(forLocation: CLLocationCoordinate2D) throws -> Promise<Pin> {
-        let pinRecord = Pin(lat: forLocation.latitude, lon: forLocation.longitude, context: context)
+    public func make(forLocation: CLLocationCoordinate2D, pageIndex: Int, perPage: Int, pin: Pin?) throws -> Promise<Pin> {
+        var pinRecord: Pin
+        if pin == nil {
+            pinRecord = Pin(lat: forLocation.latitude, lon: forLocation.longitude, context: context)
+        } else {
+            pinRecord = pin!
+        }
         var photosForPin = [PinPhoto]()
         // Save it without any photos for now
         try context.save()
         
         // Go get up to {maxAlbumSize} photos from Flickr
-        return flickr.images(forLocation, atMost: maxAlbumSize).then { (body: [String]) -> Promise<Pin> in
-            for item in body {
+        return flickr.images(forLocation, pageIndex: pageIndex, perPage: perPage).then { (body: FetchedImageDatum) -> Promise<Pin> in
+            for item in body.urisForPage {
                 // We don't want to download the image here, wait until
                 // it gets displayed. However, we do want to know where
                 // it will live.
@@ -46,14 +51,16 @@ public class NewAlbumCoordinator {
                 photosForPin.append(ppRecord)
                 
             }
+            pinRecord.nextPageIndex = body.nextPageIndex
+
             //pinRecord.photos = NSSet(array: photosForPin)
             try self.context.save()
             return Promise<Pin>(pinRecord)
         }
     }
     
-    public func makeAlbum(forLocation: CLLocationCoordinate2D) throws -> Promise<PhotoAlbumModel> {
-        return try make(forLocation).then { (pin:Pin) -> Promise<PhotoAlbumModel> in
+    public func makeAlbum(forLocation: CLLocationCoordinate2D, pageIndex: Int, perPage: Int, pinRecord: Pin? = nil) throws -> Promise<PhotoAlbumModel> {
+        return try make(forLocation, pageIndex: pageIndex, perPage: perPage, pin: pinRecord).then { (pin:Pin) -> Promise<PhotoAlbumModel> in
             var items = [PhotoAlbumMember]()
             for p in pin.photos {
                 if let photo = p as? PinPhoto {
