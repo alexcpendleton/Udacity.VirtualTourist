@@ -37,4 +37,8 @@ public class PinPhoto : NSManagedObject {
     internal func fullPath(using: PhotoOrganizer)->String {
         return using.path(self.fileName)
     }
+    
+    public override func prepareForDeletion() {
+        AppDelegate.sharedInstance().albumDestroyer.destroyFile(self)
+    }
 }
