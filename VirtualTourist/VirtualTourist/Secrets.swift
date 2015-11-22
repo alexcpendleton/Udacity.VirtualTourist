@@ -10,4 +10,5 @@ import Foundation
 
 public class Secrets {
     public let FlickrApiKey = ""
+    public let FlickrApiSecret = ""
 }
