@@ -63,6 +63,7 @@ public class URLDataPromise: Promise<NSData> {
                 if let error = error {
                     reject(URLError.UnderlyingCocoaError(request, data, rsp, error))
                 } else if let data = data, rsp = rsp as? NSHTTPURLResponse where rsp.statusCode >= 200 && rsp.statusCode < 300 {
+                    var headers = rsp.allHeaderFields
                     fulfill(data)
                 } else if let data = data where !(rsp is NSHTTPURLResponse) {
                     fulfill(data)
