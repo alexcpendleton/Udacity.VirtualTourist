@@ -29,7 +29,7 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
     public var mediator: WorkingAlbumMediator { get { return app.albumMediator } }
     public var albumDestroyer: AlbumDestroyer  { get { return app.albumDestroyer } }
     public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator) { get { return app.albumCoordinators } }
-    public var perPage: Int { get { return app.pageSize } }
+    public var pageSize: Int { get { return app.pageSize } }
     
     @IBAction func newCollectionOnTouchUpInside(sender:AnyObject?) {
         // Store the coordinate for later
@@ -38,7 +38,7 @@ public class PhotoAlbumViewController : UIViewController, UICollectionViewDataSo
         // Fetch the next page of images
         let coordinator = albumCoordinators.new
         let nextPage = model.pin.nextPageIndex.integerValue
-        try! coordinator.makeAlbum(coordinate, pageIndex: nextPage, perPage: perPage, pinRecord: model.pin).then { (body:PhotoAlbumModel) -> Promise<PhotoAlbumModel> in
+        try! coordinator.makeAlbum(coordinate, pageIndex: nextPage, pageSize: pageSize, pinRecord: model.pin).then { (body:PhotoAlbumModel) -> Promise<PhotoAlbumModel> in
             self.mediator.album = body
             self.model = self.mediator.album
             self.loadAlbum()

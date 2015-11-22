@@ -13,9 +13,9 @@ import DRImagePlaceholderHelper
 
 public class PlaceholderImageFetcher : ExternalImageFetchable {
     public var size = CGSize(width: 300, height: 300)
-    public func images(forLocation: CLLocationCoordinate2D, pageIndex: Int, perPage: Int) -> Promise<FetchedImageDatum> {
+    public func images(forLocation: CLLocationCoordinate2D, pageIndex: Int, pageSize: Int) -> Promise<FetchedImageDatum> {
         var results = [String]()
-        for _ in 1...perPage {
+        for _ in 1...pageSize {
             // We use an empty URI to force usage of a placeholder
             // Sort of silly, but it's just for testing code...
             results.append("")

@@ -11,9 +11,9 @@ import PromiseKit
 import MapKit
 
 public class PlaceholditFetcher : ExternalImageFetchable {
-    public func images(forLocation: CLLocationCoordinate2D, pageIndex: Int, perPage: Int) -> Promise<FetchedImageDatum> {
+    public func images(forLocation: CLLocationCoordinate2D, pageIndex: Int, pageSize: Int) -> Promise<FetchedImageDatum> {
         var results = [String]()
-        for i in 1...perPage {
+        for i in 1...pageSize {
             let text = "\(pageIndex).\(i)"
             let uri = "https://placeholdit.imgix.net/~text?txtsize=28&txt=\(text)&w=300&h=300"
             results.append(uri)

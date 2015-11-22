@@ -11,7 +11,7 @@ import MapKit
 import PromiseKit
 
 public protocol ExternalImageFetchable {
-    func images(forLocation:CLLocationCoordinate2D, pageIndex:Int, perPage:Int) -> Promise<FetchedImageDatum>
+    func images(forLocation:CLLocationCoordinate2D, pageIndex:Int, pageSize:Int) -> Promise<FetchedImageDatum>
 }
 
 public struct FetchedImageDatum {

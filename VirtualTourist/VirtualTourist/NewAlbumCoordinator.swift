@@ -26,7 +26,7 @@ public class NewAlbumCoordinator {
     }
     public var maxAlbumSize = 30
     
-    public func make(forLocation: CLLocationCoordinate2D, pageIndex: Int, perPage: Int, pin: Pin?) throws -> Promise<Pin> {
+    public func make(forLocation: CLLocationCoordinate2D, pageIndex: Int, pageSize: Int, pin: Pin?) throws -> Promise<Pin> {
         var pinRecord: Pin
         if pin == nil {
             pinRecord = Pin(lat: forLocation.latitude, lon: forLocation.longitude, context: context)
@@ -38,7 +38,7 @@ public class NewAlbumCoordinator {
         try context.save()
         
         // Go get up to {maxAlbumSize} photos from Flickr
-        return flickr.images(forLocation, pageIndex: pageIndex, perPage: perPage).then { (body: FetchedImageDatum) -> Promise<Pin> in
+        return flickr.images(forLocation, pageIndex: pageIndex, pageSize: pageSize).then { (body: FetchedImageDatum) -> Promise<Pin> in
             for item in body.urisForPage {
                 // We don't want to download the image here, wait until
                 // it gets displayed. However, we do want to know where
@@ -59,8 +59,8 @@ public class NewAlbumCoordinator {
         }
     }
     
-    public func makeAlbum(forLocation: CLLocationCoordinate2D, pageIndex: Int, perPage: Int, pinRecord: Pin? = nil) throws -> Promise<PhotoAlbumModel> {
-        return try make(forLocation, pageIndex: pageIndex, perPage: perPage, pin: pinRecord).then { (pin:Pin) -> Promise<PhotoAlbumModel> in
+    public func makeAlbum(forLocation: CLLocationCoordinate2D, pageIndex: Int, pageSize: Int, pinRecord: Pin? = nil) throws -> Promise<PhotoAlbumModel> {
+        return try make(forLocation, pageIndex: pageIndex, pageSize: pageSize, pin: pinRecord).then { (pin:Pin) -> Promise<PhotoAlbumModel> in
             var items = [PhotoAlbumMember]()
             for p in pin.photos {
                 if let photo = p as? PinPhoto {

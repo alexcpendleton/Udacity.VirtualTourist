@@ -16,21 +16,21 @@ public class FlickrImageFetcher : ExternalImageFetchable {
     init(secrets:Secrets) {
         self.secrets = secrets
     }
-    public func images(forLocation: CLLocationCoordinate2D, pageIndex: Int, perPage: Int) -> Promise<FetchedImageDatum> {
+    public func images(forLocation: CLLocationCoordinate2D, pageIndex: Int, pageSize: Int) -> Promise<FetchedImageDatum> {
         let methodArguments = [
             "method": METHOD_NAME,
             "api_key": secrets.FlickrApiKey,
             "extras": EXTRAS,
             "format": DATA_FORMAT,
             "nojsoncallback": NO_JSON_CALLBACK,
-            "per_page": perPage.description,
+            "per_page": pageSize.description,
             "page": pageIndex.description,
             "bbox": createBoundingBoxString(forLocation)
         ]
         return getMetaDataFromFlickr(methodArguments).then { (content:[String:AnyObject]) -> Promise<FetchedImageDatum> in
 /*
 /*
-{ "photos": { "page": 1, "pages": "3347", "perpage": 100, "total": "334602",
+{ "photos": { "page": 1, "pages": "3347", "pageSize": 100, "total": "334602",
 "photo": [
 { "id": "22800883667", "owner": "37433113@N00", "secret": "110672bbaa", "server": "5761", "farm": 6, "title": "On a ghost tour in #savannah", "ispublic": 1, "isfriend": 0, "isfamily": 0 },
 { "id": "22899233400", "owner": "128697853@N07", "secret": "772e45f742", "server": "660", "farm": 1, "title": "IMG_2071", "ispublic": 1, "isfriend": 0, "isfamily": 0 },
