@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		490A97BB1BFAD9C20078FCC6 /* AlbumDestroyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490A97BA1BFAD9C20078FCC6 /* AlbumDestroyer.swift */; };
+		4931D72E1C053703007AFC83 /* AlbumPointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4931D72D1C053703007AFC83 /* AlbumPointAnnotation.swift */; };
 		4960E2CE1BF183B20013E993 /* PhotoAlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4960E2CD1BF183B20013E993 /* PhotoAlbumModel.swift */; };
 		4960E2D01BF183CF0013E993 /* PhotoAlbumMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4960E2CF1BF183CF0013E993 /* PhotoAlbumMember.swift */; };
 		4970505F1BE83D2500F098B2 /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4970505E1BE83D2500F098B2 /* MainMapViewController.swift */; };
@@ -54,6 +55,7 @@
 /* Begin PBXFileReference section */
 		3E9EA4E4945EACCCE3D15894 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		490A97BA1BFAD9C20078FCC6 /* AlbumDestroyer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumDestroyer.swift; sourceTree = "<group>"; };
+		4931D72D1C053703007AFC83 /* AlbumPointAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumPointAnnotation.swift; sourceTree = "<group>"; };
 		4960E2CD1BF183B20013E993 /* PhotoAlbumModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumModel.swift; sourceTree = "<group>"; };
 		4960E2CF1BF183CF0013E993 /* PhotoAlbumMember.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumMember.swift; sourceTree = "<group>"; };
 		4970505E1BE83D2500F098B2 /* MainMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				49C731D91BE9A01E0011A891 /* PinDropManager.swift */,
 				49F8039B1BF4476300C1FA1E /* WorkingAlbumMediator.swift */,
 				490A97BA1BFAD9C20078FCC6 /* AlbumDestroyer.swift */,
+				4931D72D1C053703007AFC83 /* AlbumPointAnnotation.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				49C731DC1BE9A4480011A891 /* ExternalImageFetchable.swift in Sources */,
 				49C731E41BEB16E10011A891 /* Double.swift in Sources */,
 				49E02D791BF1AE7D0097E0C3 /* ExistingAlbumCoordinator.swift in Sources */,
+				4931D72E1C053703007AFC83 /* AlbumPointAnnotation.swift in Sources */,
 				490A97BB1BFAD9C20078FCC6 /* AlbumDestroyer.swift in Sources */,
 				49D6AF5E1BE7118A00DE69CB /* AppConfiguration.swift in Sources */,
 				49C731DA1BE9A01E0011A891 /* PinDropManager.swift in Sources */,

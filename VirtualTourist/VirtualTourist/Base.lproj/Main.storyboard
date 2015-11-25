@@ -92,7 +92,6 @@
                                                 </imageView>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CheckFilled" translatesAutoresizingMaskIntoConstraints="NO" id="cDC-uO-Pr8">
                                                     <rect key="frame" x="70" y="70" width="16" height="16"/>
-                                                    <color key="tintColor" red="0.12324084289999999" green="0.4578794316" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

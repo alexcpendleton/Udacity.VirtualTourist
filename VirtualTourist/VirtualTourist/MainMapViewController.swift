@@ -116,15 +116,3 @@ public class MainMapViewController : UIViewController, MKMapViewDelegate, PinDro
         }
     }
 }
-
-public class AlbumPointAnnotation : MKPointAnnotation {
-    var pin: Pin?
-    init(pin: Pin?) {
-        super.init()
-        self.pin = pin
-        if pin != nil {
-            self.coordinate = pin!.coordinate
-            _ = pin!.photos
-        }
-    }
-}

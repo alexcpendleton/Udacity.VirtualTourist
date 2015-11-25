@@ -10,7 +10,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "Ok Filled-100.png",
+      "filename" : "Checked-100_Filled.png",
       "scale" : "3x"
     }
   ],
@@ -19,6 +19,6 @@
     "author" : "xcode"
   },
   "properties" : {
-    "template-rendering-intent" : "template"
+    "template-rendering-intent" : "original"
   }
 }
