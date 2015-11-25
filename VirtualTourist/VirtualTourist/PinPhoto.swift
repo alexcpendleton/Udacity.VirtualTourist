@@ -10,20 +10,35 @@ import Foundation
 import CoreData
 
 @objc(PinPhoto)
-class PinPhoto : NSManagedObject {
+public class PinPhoto : NSManagedObject {
     struct Keys {
-        static let id = "id"
         static let sourceUri = "sourceUri"
+        static let fileName = "fileName"
+        static let pin = "pin"
     }
     
-    @NSManaged var id: NSNumber
     @NSManaged var sourceUri: String
+    @NSManaged var fileName: String
     @NSManaged var pin: Pin
     
-    init(dictionary: [String:AnyObject], context: NSManagedObjectContext) {
+    convenience init(dictionary: [String:AnyObject], context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("PinPhoto", inManagedObjectContext: context)
-        super.init(entity: entity!, insertIntoManagedObjectContext: context)
-        id = dictionary[Keys.id] as! NSNumber
+        self.init(entity: entity!, insertIntoManagedObjectContext: context)
         sourceUri = dictionary[Keys.sourceUri] as! String
+        fileName = dictionary[Keys.fileName] as! String
+    }
+    convenience init(uri: String, fileName: String, context: NSManagedObjectContext) {
+        self.init(dictionary:[
+            Keys.sourceUri: uri,
+            Keys.fileName: fileName,
+        ], context: context)
+    }
+    
+    internal func fullPath(using: PhotoOrganizer)->String {
+        return using.path(self.fileName)
+    }
+    
+    public override func prepareForDeletion() {
+        AppDelegate.sharedInstance().albumDestroyer.destroyFile(self)
     }
 }

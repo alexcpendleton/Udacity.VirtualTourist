@@ -14,7 +14,6 @@ public class CoreDataStackManager {
     lazy var managedObjectContext: NSManagedObjectContext! = {
         let modelURL = NSBundle.mainBundle().URLForResource("VirtualTourist", withExtension: "momd")!
         let mom = NSManagedObjectModel(contentsOfURL: modelURL)!
-        //ZAssert(mom != nil, "Error initializing mom from: \(modelURL)")
         
         let psc = NSPersistentStoreCoordinator(managedObjectModel: mom)
         
@@ -23,7 +22,6 @@ public class CoreDataStackManager {
         do {
         let store = try psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
         } catch { return nil }
-        //ZAssert(store != nil, "Unresolved error \(error?.localizedDescription), \(error?.userInfo)\nAttempted to create store at \(storeURL)")
         
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = psc

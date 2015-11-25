@@ -5,6 +5,7 @@
 //  Created by Alex Pendleton on 10/29/15.
 //  Copyright © 2015 Alex Pendleton. All rights reserved.
 //
+// Icons from https://icons8.com/
 
 import UIKit
 import CoreData
@@ -22,8 +23,20 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     /** Handles the single AppConfiguration record that is used for
      maintaining application state between loads. */
     public var appConfigManager: AppConfigManager!
-    
     private static var _sharedInstance: AppDelegate!
+    
+    public var placeholderMaker: PlaceholderImageFetcher!
+    public var imageFetcher: ExternalImageFetchable!
+    public var albumCoordinators: (new:NewAlbumCoordinator, existing:ExistingAlbumCoordinator)!
+    public var organizer = PhotoOrganizer()
+    public var albumDestroyer: AlbumDestroyer!
+    
+    public var albumMediator: WorkingAlbumMediator!
+    
+    private var secrets: Secrets!
+    
+    public var pageSize = 30
+    
     /** Gets the shared instance Singleton for the app's various configuration
      members and methods */
     public static func sharedInstance() -> AppDelegate {
@@ -31,14 +44,27 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     public func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        stackManager = CoreDataStackManager()
+        let secretPath = NSBundle.mainBundle().pathForResource("Secrets", ofType: "plist")
+        secrets = Secrets(fromPlistAtPath: secretPath!)
+        //secrets = Secrets(key: "your_api_key", secret: "your_api_secret")
         
+        stackManager = CoreDataStackManager()
         let context = stackManager.managedObjectContext
         appConfigRepo = NsmAppConfigurationRepository(context: context)
         dataFiller = InitialDataFiller(context: context, factory: NsmAppConfigurationFactory(context: context), repository: appConfigRepo)
         try! dataFiller.fillIfNecessary()
         
         appConfigManager = AppConfigManager(repo: appConfigRepo)
+        placeholderMaker = PlaceholderImageFetcher()
+        imageFetcher = FlickrImageFetcher(secrets: secrets)
+        albumMediator = WorkingAlbumMediator()
+        albumDestroyer = AlbumDestroyer(context: context, organizer: organizer)
+            
+
+        let placeholder = placeholderMaker.onePlaceholder()
+        let n = NewAlbumCoordinator(nsContext: context, flickr: imageFetcher, organizer: organizer, placeholder: placeholder)
+        let e = ExistingAlbumCoordinator(nsContext: context, placeholder: placeholder, organizer: organizer)
+        albumCoordinators = (n, e)
         
         AppDelegate._sharedInstance = self
         // Override point for customization after application launch.

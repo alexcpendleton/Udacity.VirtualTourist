@@ -8,29 +8,45 @@
 
 import Foundation
 import CoreData
+import MapKit
 
 @objc(Pin)
-class Pin : NSManagedObject {
+public class Pin : NSManagedObject {
     struct Keys {
-        static let name = "name"
         static let latitude = "latitude"
         static let longitude = "longitude"
-        static let id = "id"
-        //static let photos = "photos"
+        static let photos = "photos"
+        static let nextPageIndex = "nextPageIndex"
+//        static let totalPhotosCount = "totalPhotosCount"
     }
     
-    @NSManaged var name: String
-    @NSManaged var latitude: Float
-    @NSManaged var longitude: Float
-    @NSManaged var id: NSNumber
-    @NSManaged var photos: [PinPhoto]
+    @NSManaged var latitude: NSNumber
+    @NSManaged var longitude: NSNumber
+    @NSManaged var photos: NSSet
+    @NSManaged var nextPageIndex: NSNumber
+//    @NSManaged var totalPhotosCount: NSNumber
     
-    init(dictionary: [String:AnyObject], context: NSManagedObjectContext) {
+    public var coordinate: CLLocationCoordinate2D {
+        get { return CLLocationCoordinate2D(latitude: latitude.doubleValue, longitude: self.longitude.doubleValue) }
+    }
+    
+    convenience init(dictionary: [String:AnyObject], context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)
-        super.init(entity: entity!, insertIntoManagedObjectContext: context)
-        name = dictionary[Keys.name] as! String
-        latitude = dictionary[Keys.latitude] as! Float
-        longitude = dictionary[Keys.longitude] as! Float
-        id = dictionary[Keys.id] as! NSNumber
+        self.init(entity: entity!, insertIntoManagedObjectContext: context)
+        latitude = dictionary[Keys.latitude] as! NSNumber
+        longitude = dictionary[Keys.longitude] as! NSNumber
+        nextPageIndex = dictionary[Keys.nextPageIndex] as! NSNumber
+//        totalPhotosCount = dictionary[Keys.totalPhotosCount] as! NSNumber
+    }
+    
+    
+    convenience init(lat:NSNumber, lon:NSNumber, context: NSManagedObjectContext) {
+        self.init(dictionary: [
+            Keys.latitude: lat,
+            Keys.longitude: lon,
+            Keys.nextPageIndex: 1,
+//            Keys.totalPhotosCount: 0,
+            Keys.photos: NSSet(array: [PinPhoto]())
+        ], context: context)
     }
 }
