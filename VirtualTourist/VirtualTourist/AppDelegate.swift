@@ -61,7 +61,7 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
         albumDestroyer = AlbumDestroyer(context: context, organizer: organizer)
             
 
-        let placeholder = placeholderMaker.onePlaceholder()
+        let placeholder = UIImage(named: "PhotoPlaceholder")!
         let n = NewAlbumCoordinator(nsContext: context, flickr: imageFetcher, organizer: organizer, placeholder: placeholder)
         let e = ExistingAlbumCoordinator(nsContext: context, placeholder: placeholder, organizer: organizer)
         albumCoordinators = (n, e)
