@@ -44,9 +44,10 @@ public class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     public func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let secretPath = NSBundle.mainBundle().pathForResource("Secrets", ofType: "plist")
-        secrets = Secrets(fromPlistAtPath: secretPath!)
-        //secrets = Secrets(key: "your_api_key", secret: "your_api_secret")
+        //let secretPath = NSBundle.mainBundle().pathForResource("Secrets", ofType: "plist")
+        //secrets = Secrets(fromPlistAtPath: secretPath!)
+        secrets = Secrets(key: "your_api_key")
+        assert(secrets.FlickrApiKey != "your_api_key", "Instructor: Please set your API key in AppDelegate.swift!")
         
         stackManager = CoreDataStackManager()
         let context = stackManager.managedObjectContext

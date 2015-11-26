@@ -14,7 +14,6 @@
 		4970505F1BE83D2500F098B2 /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4970505E1BE83D2500F098B2 /* MainMapViewController.swift */; };
 		497DE20C1C0154D30008B269 /* FlickrImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE20B1C0154D30008B269 /* FlickrImageFetcher.swift */; };
 		497DE20E1C0158BD0008B269 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497DE20D1C0158BD0008B269 /* Secrets.swift */; };
-		497DE2121C0164700008B269 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 497DE2111C0164700008B269 /* Secrets.plist */; };
 		498F80851BE31075004ABBD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498F80841BE31075004ABBD5 /* AppDelegate.swift */; };
 		498F808A1BE31075004ABBD5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 498F80881BE31075004ABBD5 /* Main.storyboard */; };
 		498F808D1BE31075004ABBD5 /* VirtualTourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 498F808B1BE31075004ABBD5 /* VirtualTourist.xcdatamodeld */; };
@@ -61,7 +60,6 @@
 		4970505E1BE83D2500F098B2 /* MainMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
 		497DE20B1C0154D30008B269 /* FlickrImageFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrImageFetcher.swift; sourceTree = "<group>"; };
 		497DE20D1C0158BD0008B269 /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
-		497DE2111C0164700008B269 /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		498F80811BE31075004ABBD5 /* VirtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		498F80841BE31075004ABBD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		498F80891BE31075004ABBD5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -181,7 +179,6 @@
 				498F808E1BE31075004ABBD5 /* Assets.xcassets */,
 				498F80901BE31075004ABBD5 /* LaunchScreen.storyboard */,
 				498F80931BE31075004ABBD5 /* Info.plist */,
-				497DE2111C0164700008B269 /* Secrets.plist */,
 				498F808B1BE31075004ABBD5 /* VirtualTourist.xcdatamodeld */,
 				49C731DD1BE9A6090011A891 /* Bridging.h */,
 			);
@@ -340,7 +337,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				497DE2121C0164700008B269 /* Secrets.plist in Resources */,
 				498F80921BE31075004ABBD5 /* LaunchScreen.storyboard in Resources */,
 				498F808F1BE31075004ABBD5 /* Assets.xcassets in Resources */,
 				498F808A1BE31075004ABBD5 /* Main.storyboard in Resources */,
